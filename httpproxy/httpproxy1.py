@@ -40,7 +40,7 @@ class Proxy(object):
 		ip=socket.gethostbyname(addr)  
 		print ip,port  
 		self.destnation.connect((ip,port))  
-		data="%s %s %s\r\n" %(self.headers['method'],self.headers['path'],self.headers['protocol'])  
+		data="%s %s %s\r\n" %(self.headers['method'],url[2],self.headers['protocol'])  
 		self.destnation.send(data+self.request)  
 		print 'data',data
 		print data+self.request  
