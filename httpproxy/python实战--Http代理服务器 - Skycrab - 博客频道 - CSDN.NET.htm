@@ -1,0 +1,899 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0059)http://blog.csdn.net/yueguanghaidao/article/details/9277331 -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>python实战--Http代理服务器 - Skycrab
+        - 博客频道 - CSDN.NET</title>
+    
+    <meta name="description" content="打算好好深入研究下pytho的socket编程，那天看了这篇博文，http://www.apprk.com/archives/146，于是打算学习下，仿写了一下，发现写好还真不容易，中途出现很多问题，果真是看的容易，做起来难啊。  源代码如下：import socketimport threadimport urlparseimport selectBUFLEN=8192">
+    <script type="text/javascript" async="" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/ga.js"></script><script src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/jquery.js" type="text/javascript"></script><style type="text/css"></style>
+    <script type="text/javascript" src="http://static.blog.csdn.net/scripts/ad.js?v=1.1"></script>
+        <!--new top-->
+       
+        <link rel="stylesheet" href="http://static.csdn.net/public/common/toolbar/css/index.css">
+        <!--new top-->
+
+    <link rel="Stylesheet" type="text/css" href="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/style.css">
+    <link id="RSSLink" title="RSS" type="application/rss+xml" rel="alternate" href="http://blog.csdn.net/yueguanghaidao/rss/list">
+    <link rel="shortcut icon" href="http://csdnimg.cn/public/favicon.ico">
+    <link type="text/css" rel="stylesheet" href="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/default.css">
+ 
+
+<link rel="stylesheet" href="http://csdnimg.cn/public/common/toolbar/css/font-awesome.min.css"><script type="text/javascript" charset="utf-8" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/tracking.js"></script><script type="text/javascript" charset="utf-8" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/main.js"></script><link href="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/bdsstyle.css" rel="stylesheet" type="text/css"><link type="text/css" rel="stylesheet" href="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/style(1).css"><script src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/logger.js"></script></head>
+<body><iframe frameborder="0" style="display: none;"></iframe><div id="bdshare_s" style="display: block;"><iframe id="bdsIfr" style="position:absolute;display:none;z-index:9999;" frameborder="0"></iframe><div id="bdshare_l" style="display: none;"><div id="bdshare_l_c"><h6>分享到</h6><ul><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_mshare mshare">一键分享</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_qzone qqkj">QQ空间</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_tsina xlwb">新浪微博</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_bdysc bdysc">百度云收藏</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_renren rrw">人人网</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_tqq txwb">腾讯微博</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_bdxc bdxc">百度相册</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_kaixin001 kxw">开心网</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_tqf txpy">腾讯朋友</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_tieba bdtb">百度贴吧</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_douban db">豆瓣网</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_tsohu shwb">搜狐微博</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_bdhome bdhome">百度新首页</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_sqq sqq">QQ好友</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_thx thx">和讯微博</a></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="bds_more">更多...</a></li></ul><p><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="goWebsite">百度分享</a></p></div></div></div>
+    
+   
+      <!--new top-->
+    <script id="toolbar-tpl-scriptId" fixed="true" prod="blog" skin="black" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/html.js" type="text/javascript"></script><div class="csdn-toolbar csdn-toolbar-skin-black ">        <div class="container row center-block ">          <div class="col-md-3 pull-left logo clearfix"><a href="http://www.csdn.net/?ref=toolbar" title="CSDN首页" target="_blank" class="icon"></a><a title="频道首页" href="http://blog.csdn.net/?ref=toolbar_logo" target="_blank" class="img blog-icon"></a></div>          <div class="pull-right login-wrap unlogin">            <ul class="btns">              <li class="loginlink"><a href="https://passport.csdn.net/account/login?ref=toolbar" target="_top">登录&nbsp;</a>|<a target="_top" href="https://passport.csdn.net/account/register?ref=toolbar">&nbsp;注册</a></li>              <li class="search">                <div class="icon on-search-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <form action="http://so.csdn.net/search" method="get" target="_blank">                      <input type="hidden" value="toolbar" name="ref" accesskey="2">                      <div class="border">                        <input placeholder="搜索" type="text" value="" name="q" accesskey="2"><span class="icon-enter-sm"></span>                      </div>                    </form>                  </div>                </div>              </li>              <li class="favor">                <div class="icon on-favor-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div style="display:none;" class="favor-success"><span class="msg">收藏成功</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <div style="display:none;" class="favor-failed"><span class="icon-danger-lg"></span><span class="msg">收藏失败，请重新收藏</span>                      <div class="btns"><span class="btn btn-primary ok">确定</span></div>                    </div>                    <form role="form" class="form-horizontal favor-form">                      <div class="form-group">                        <div class="clearfix">                          <label for="input-title" class="col-sm-2 control-label">标题</label>                          <div class="col-sm-10">                            <input id="inputTitle" type="text" placeholder="" class="title form-control">                          </div>                        </div>                        <div class="alert alert-danger"><strong></strong>标题不能为空</div>                      </div>                      <div class="form-group">                        <label for="input-url" class="col-sm-2 control-label">网址</label>                        <div class="col-sm-10">                          <input id="input-url" type="text" placeholder="" class="url form-control">                        </div>                      </div>                      <div class="form-group">                        <label for="input-tag" class="col-sm-2 tag control-label">标签</label>                        <div class="col-sm-10">                          <input id="input-tag" type="text" class="form-control tag">                        </div>                      </div>                      <div class="form-group">                        <label for="input-description" class="description col-sm-2 control-label">摘要</label>                        <div class="col-sm-10">                          <textarea id="input-description" class="form-control description"></textarea>                        </div>                      </div>                      <div class="form-group">                        <div class="col-sm-offset-2 col-sm-10 ft">                          <div class="col-sm-4 pull-left">                            <div class="checkbox">                              <label>                                <input type="checkbox" name="share" checked="checked" class="share">公开                              </label>                            </div>                          </div>                          <div class="col-sm-8 pull-right favor-btns">                            <button type="button" class="cancel btn btn-default">取消</button>                            <button type="submit" class="submit btn btn-primary">收藏</button>                          </div>                        </div>                      </div>                    </form>                  </div>                </div>              </li>              <li class="notify">                <div style="display:none" class="number"></div>                <div style="display:none" class="icon-hasnotes-sm"></div>                <div id="header_notice_num"></div>                <div class="icon on-notify-icon">                  <div class="wrap">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div id="note1" class="csdn_note">                      <div class="box"></div>                    <iframe src="about:block" frameborder="0" allowtransparency="true" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe></div>                  </div>                </div>              </li>              <li class="ugc">                <div class="icon on-ugc-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <dl>                      <dt><a href="http://geek.csdn.net/news/expert?ref=toolbar" target="_blank" class="p-news clearfix"><em class="icon"></em><span>分享资讯</span></a></dt>                      <dt><a href="http://share.csdn.net/slides/new?ref=toolbar" target="_blank" class="p-doc clearfix"><em class="icon"></em><span>传PPT/文档</span></a></dt>                      <dt><a href="http://bbs.csdn.net/topics/new?ref=toolbar" target="_blank" class="p-ask clearfix"><em class="icon"></em><span>提问题</span></a></dt>                      <dt><a href="http://write.blog.csdn.net/postedit?ref=toolbar" target="_blank" class="p-blog clearfix"><em class="icon"></em><span>写博客</span></a></dt>                      <dt><a href="http://u.download.csdn.net/upload?ref=toolbar" target="_blank" class="p-src clearfix"><em class="icon"></em><span>传资源</span></a></dt>                      <dt><a href="https://code.csdn.net/projects/new?ref=toolbar" target="_blank" class="c-obj clearfix"><em class="icon"></em><span>创建项目</span></a></dt>                      <dt><a href="https://code.csdn.net/snippets/new?ref=toolbar" target="_blank" class="c-code clearfix"><em class="icon"></em><span>创建代码片</span></a></dt>                    </dl>                  </div>                </div>              </li>              <li class="profile">                <div class="icon on-profile-icon"><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/100x100.jpg" class="curr-icon-img">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                    <div class="bd">                      <dl class="clearfix">                        <dt class="pull-left img"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="avatar"><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/100x100.jpg"></a></dt>                        <dd class="info"><a target="_blank" href="http://my.csdn.net/?ref=toolbar" class="nickname"></a><a class="set-nick" href="https://passport.csdn.net/account/profile">设置昵称<span class="write-icon"></span></a><span class="dec"><a class="fill-dec" href="http://my.csdn.net/" target="_blank">编辑自我介绍，让更多人了解你<span class="write-icon"></span></a></span></dd>                      </dl>                    </div>                    <div class="ft clearfix"><a target="_blank" href="http://my.csdn.net/my/account/changepwd?ref=toolbar" class="pull-left"><span class="icon-cog"></span>帐号设置</a><a href="https://passport.csdn.net/account/logout?ref=toolbar" target="_top" class="pull-right "><span class="icon-signout"></span><span class="out">退出</span></a></div>                  </div>                </div>              </li>              <li class="apps">                <div class="icon on-apps-icon">                  <div class="wrap clearfix">                    <div class="curr-icon-wrap">                      <div class="curr-icon"></div>                    </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>社区</h5>                      </dt>                      <dd> <a href="http://blog.csdn.net/?ref=toolbar" target="_blank">博客</a></dd>                      <dd> <a href="http://bbs.csdn.net/?ref=toolbar" target="_blank">论坛</a></dd>                      <dd> <a href="http://download.csdn.net/?ref=toolbar" target="_blank">下载</a></dd>                      <dd><a href="http://share.csdn.net/?ref=toolbar" target="_blank">Share</a></dd>                      <dd><a href="http://geek.csdn.net/?ref=toolbar" target="_blank">极客头条</a></dd>                    </dl>                  </div>                  <div class="detail">                    <dl>                      <dt>                        <h5>服务</h5>                      </dt>                      <dd> <a href="https://code.csdn.net/?ref=toolbar" target="_blank">CODE</a></dd>                      <dd> <a href="http://hero.csdn.net/?ref=toolbar" target="_blank">英雄会</a></dd>                      <dd> <a href="http://huiyi.csdn.net/meeting?ref=toolbar" target="_blank">会议</a></dd>                      <dd> <a href="http://www.csto.com/?ref=toolbar" target="_blank">CSTO</a></dd>                    </dl>                  </div>                  <div class="detail last">                    <dl>                      <dt>                        <h5>俱乐部</h5>                      </dt>                      <dd> <a href="http://student.csdn.net/?ref=toolbar" target="_blank">高校俱乐部</a></dd>                      <dd> <a href="http://club.csdn.net/cto?ref=toolbar" target="_blank">CTO俱乐部</a></dd>                    </dl>                  </div>                </div>              </div>            </li>            </ul>          </div>        </div>    </div>
+     <!--new top-->
+    <div id="container">
+        <div id="header">
+    <div class="header">
+        <div id="blog_title">
+            <h2>
+                <a href="http://blog.csdn.net/yueguanghaidao">Skycrab</a></h2>
+            <h3>Act like an overlord and do whatever one wishes</h3>
+            <div class="clear">
+            </div>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+</div>
+<div id="navigator">
+    <div class="navigator_bg">
+    </div>
+    <div class="navigator">
+        <ul>
+                <li id="btnContents"><a href="http://blog.csdn.net/yueguanghaidao?viewmode=contents"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_mulu&#39;])">
+                    <img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/ico_list.gif">目录视图</span></a></li>
+                <li id="btnView"><a href="http://blog.csdn.net/yueguanghaidao?viewmode=list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_zhaiyao&#39;])">
+                    <img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/ico_summary.gif">摘要视图</span></a></li>
+                <li id="btnRss"><a href="http://blog.csdn.net/yueguanghaidao/rss/list"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_RSS&#39;])">
+                    <img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/ico_rss.gif">订阅</span></a></li>
+
+            </ul>
+    </div>
+</div>
+<script type="text/javascript">
+    var username = "yueguanghaidao";
+    var _blogger = username;
+    var blog_address = "http://blog.csdn.net/yueguanghaidao";
+    var static_host = "http://static.blog.csdn.net";
+    var currentUserName = "";
+</script>
+
+        <div id="body">
+            <div id="main">
+                <div class="main">
+<div class="notice tracking-ad" data-mod="popu_3"> 
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/25387451" target="_blank">
+<font color="blue">有奖征资源，博文分享有内涵
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/blogdevteam/article/details/25400391" target="_blank">
+<font color="red">4月推荐博文汇总 
+</font></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="http://blog.csdn.net/csdnproduct/article/details/27504397" target="_blank">
+<font color="blue">CSDN博客支持Windows Live Writer离线写博客啦
+</font></a>
+
+</div>                    <link href="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/comment1.css" type="text/css" rel="stylesheet">
+<link href="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/style1.css" type="text/css" rel="stylesheet">
+<script language="JavaScript" type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/jquery.cookie.js"></script>
+<script type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/main(1).js"></script>
+<div id="article_details" class="details">
+    <div class="article_title">   
+         <span class="ico ico_type_Original"></span>
+
+
+    <h1>
+        <span class="link_title"><a href="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET.htm">
+        python实战--Http代理服务器
+        </a></span>
+    </h1>
+</div>
+
+    <div class="article_manage">
+        <span class="link_categories">
+        分类：
+            <a href="http://blog.csdn.net/yueguanghaidao/article/category/958330" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_fenlei&#39;]);">python</a> 
+        </span>
+    <span class="link_postdate">2013-07-09 00:34</span>
+    <span class="link_view" title="阅读次数">1626人阅读</span>
+    <span class="link_comments" title="评论次数"><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#comments" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_pinglun&#39;])">评论</a>(0)</span>
+    <span class="link_collect"><a href="javascript:void(0);" onclick="javascript:_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shoucang&#39;]);collectArticle(&#39;python实战--Http代理服务器&#39;,&#39;9277331&#39;);return false;" title="收藏">收藏</a></span>
+    <span class="link_report"><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#report" onclick="javascript:_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_jubao&#39;]);report(9277331,2);return false;" title="举报">举报</a></span>
+    
+</div>
+
+    
+<div id="article_content" class="article_content">
+
+<p><span style="white-space:pre"></span>打算好好深入研究下pytho的socket编程，那天看了这篇博文，<a href="http://www.apprk.com/archives/146">http://www.apprk.com/archives/146</a>，于是打算学习下，仿写了一下，发现写好还真不容易，中途出现很多问题，果真是看的容易，做起来难啊。</p>
+<p>&nbsp;<span style="white-space:pre"> </span>源代码如下：</p>
+<p></p>
+<div class="dp-highlighter bg_python"><div class="bar"><div class="tools"><b>[python]</b> <a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 528px; top: 512px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_1" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_1" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=1&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-py"><li class="alt"><span><span class="keyword">import</span><span>&nbsp;socket&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">import</span><span>&nbsp;thread&nbsp;&nbsp;</span></span></li><li class="alt"><span><span class="keyword">import</span><span>&nbsp;urlparse&nbsp;&nbsp;</span></span></li><li class=""><span><span class="keyword">import</span><span>&nbsp;select&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>BUFLEN=<span class="number">8192</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">class</span><span>&nbsp;Proxy(object):&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;__init__(</span><span class="special">self</span><span>,conn,addr):&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.source=conn&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.request=""&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.headers={}&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.destnation=socket.socket(socket.AF_INET,socket.SOCK_STREAM)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.run()&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;get_headers(</span><span class="special">self</span><span>):&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header=<span class="string">''</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;</span><span class="special">True</span><span>:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;header+=<span class="special">self</span><span>.source.recv(BUFLEN)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index=header.find(<span class="string">'\n'</span><span>)&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;index&nbsp;&gt;</span><span class="number">0</span><span>:&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">break</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">#firstLine,self.request=header.split('\r\n',1)</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;firstLine=header[:index]&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.request=header[index+</span><span class="number">1</span><span>:]&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.headers[</span><span class="string">'method'</span><span>],</span><span class="special">self</span><span>.headers[</span><span class="string">'path'</span><span>],</span><span class="special">self</span><span>.headers[</span><span class="string">'protocol'</span><span>]=firstLine.split()&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;conn_destnation(</span><span class="special">self</span><span>):&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;url=urlparse.urlparse(<span class="special">self</span><span>.headers[</span><span class="string">'path'</span><span>])&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;hostname=url[<span class="number">1</span><span>]&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port=<span class="string">"80"</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;hostname.find(</span><span class="string">':'</span><span>)&nbsp;&gt;</span><span class="number">0</span><span>:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addr,port=hostname.split(<span class="string">':'</span><span>)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><span>:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;addr=hostname&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;port=int(port)&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ip=socket.gethostbyname(addr)&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span><span>&nbsp;ip,port&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.destnation.connect((ip,port))&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data=<span class="string">"%s&nbsp;%s&nbsp;%s\r\n"</span><span>&nbsp;%(</span><span class="special">self</span><span>.headers[</span><span class="string">'method'</span><span>],</span><span class="special">self</span><span>.headers[</span><span class="string">'path'</span><span>],</span><span class="special">self</span><span>.headers[</span><span class="string">'protocol'</span><span>])&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.destnation.send(data+</span><span class="special">self</span><span>.request)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span><span>&nbsp;data+</span><span class="special">self</span><span>.request&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;renderto(</span><span class="special">self</span><span>):&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;readsocket=[<span class="special">self</span><span>.destnation]&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;</span><span class="special">True</span><span>:&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data=<span class="string">''</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(rlist,wlist,elist)=select.select(readsocket,[],[],<span class="number">3</span><span>)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;rlist:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;data=rlist[<span class="number">0</span><span>].recv(BUFLEN)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;len(data)&gt;</span><span class="number">0</span><span>:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.source.send(data)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else</span><span>:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">break</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;run(</span><span class="special">self</span><span>):&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.get_headers()&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.conn_destnation()&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.renderto()&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">class</span><span>&nbsp;Server(object):&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;__init__(</span><span class="special">self</span><span>,host,port,handler=Proxy):&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.host=host&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.port=port&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.server.setsockopt(socket.SOL_SOCKET,&nbsp;socket.SO_REUSEADDR,&nbsp;</span><span class="number">1</span><span>)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.server.bind((host,port))&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.server.listen(</span><span class="number">5</span><span>)&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="special">self</span><span>.handler=handler&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;start(</span><span class="special">self</span><span>):&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;</span><span class="special">True</span><span>:&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">try</span><span>:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;conn,addr=<span class="special">self</span><span>.server.accept()&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread.start_new_thread(<span class="special">self</span><span>.handler,(conn,addr))&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">except</span><span>:&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">pass</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">if</span><span>&nbsp;__name__==</span><span class="string">'__main__'</span><span>:&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;s=Server(<span class="string">'127.0.0.1'</span><span>,</span><span class="number">8080</span><span>)&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;s.start()&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="python" style="display: none;">import socket
+import thread
+import urlparse
+import select
+
+BUFLEN=8192
+
+
+class Proxy(object):
+    def __init__(self,conn,addr):
+        self.source=conn
+        self.request=""
+        self.headers={}
+        self.destnation=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.run()
+
+    def get_headers(self):
+        header=''
+        while True:
+            header+=self.source.recv(BUFLEN)
+            index=header.find('\n')
+            if index &gt;0:
+                break
+        #firstLine,self.request=header.split('\r\n',1)
+        firstLine=header[:index]
+        self.request=header[index+1:]
+        self.headers['method'],self.headers['path'],self.headers['protocol']=firstLine.split()
+
+    def conn_destnation(self):
+        url=urlparse.urlparse(self.headers['path'])
+        hostname=url[1]
+        port="80"
+        if hostname.find(':') &gt;0:
+            addr,port=hostname.split(':')
+        else:
+            addr=hostname
+        port=int(port)
+        ip=socket.gethostbyname(addr)
+        print ip,port
+        self.destnation.connect((ip,port))
+        data="%s %s %s\r\n" %(self.headers['method'],self.headers['path'],self.headers['protocol'])
+        self.destnation.send(data+self.request)
+        print data+self.request
+
+
+    def renderto(self):
+        readsocket=[self.destnation]
+        while True:
+            data=''
+            (rlist,wlist,elist)=select.select(readsocket,[],[],3)
+            if rlist:
+                data=rlist[0].recv(BUFLEN)
+                if len(data)&gt;0:
+                    self.source.send(data)
+                else:
+                    break
+    def run(self):
+        self.get_headers()
+        self.conn_destnation()
+        self.renderto()
+
+
+
+class Server(object):
+
+    def __init__(self,host,port,handler=Proxy):
+        self.host=host
+        self.port=port
+        self.server=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        self.server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.server.bind((host,port))
+        self.server.listen(5)
+        self.handler=handler
+
+    def start(self):
+        while True:
+            try:
+                conn,addr=self.server.accept()
+                thread.start_new_thread(self.handler,(conn,addr))
+            except:
+                pass
+
+
+if __name__=='__main__':
+    s=Server('127.0.0.1',8080)
+    s.start()
+</pre>其实Http代理服务器本身不难，但写出来还是挺费事的，这里就不细说源代码了，很简单。主要说说，我遇到的问题。<br>
+<br>
+<p></p>
+<p>一： 我本来只知道，thread.start_new_thread的第一个参数是函数对象，但当我看到上面的博文时，心里一愣，这样也可以，于是我迅速的测试了一下：</p>
+<p></p>
+<div class="dp-highlighter bg_python"><div class="bar"><div class="tools"><b>[python]</b> <a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 528px; top: 2197px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_2" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_2" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=2&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-py"><li class="alt"><span><span class="keyword">import</span><span>&nbsp;thread&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">class</span><span>&nbsp;Hello:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;__init__(</span><span class="special">self</span><span>,content):&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span><span>&nbsp;content&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">def</span><span>&nbsp;cs():&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread.start_new_thread(Hello,&nbsp;(<span class="string">"Hello&nbsp;World"</span><span>,))&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">if</span><span>&nbsp;__name__==</span><span class="string">'__main__'</span><span>:&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;cs()&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="python" style="display: none;">import thread
+
+class Hello:
+    def __init__(self,content):
+        print content
+
+def cs():
+        thread.start_new_thread(Hello, ("Hello World",))
+
+if __name__=='__main__':
+    cs()
+</pre><br>
+我很失望的发现，报了个异常
+<p></p>
+<p></p>
+<div class="dp-highlighter bg_python"><div class="bar"><div class="tools"><b>[python]</b> <a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 528px; top: 2510px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_3" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_3" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=3&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-py"><li class="alt"><span><span>Unhandled&nbsp;exception&nbsp;</span><span class="keyword">in</span><span>&nbsp;thread&nbsp;started&nbsp;by&nbsp;&nbsp;&nbsp;</span></span></li><li class=""><span>Error&nbsp;<span class="keyword">in</span><span>&nbsp;sys.excepthook:&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span>Original&nbsp;exception&nbsp;was:&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="python" style="display: none;">Unhandled exception in thread started by 
+Error in sys.excepthook:
+
+Original exception was:</pre><br>
+&nbsp; &nbsp;一看，我说嘛，第一个参数怎么可以是对象，我呵呵一笑，稍微鄙视了一下作者。于是，我洗洗睡了，第二天，我还是不死心，于是把代码下下来，本地实验了一下，可以的，立马意识到是我2了，于是立马百度。
+<p></p>
+<p>原来thread模块中，主线程如果比子线程先结束，就会抛出这个异常，所以我们必须让子线程先结束，最简单的方法就是让主线程sleep足够长的时间，至于多长时间，貌似不知道，那到底怎么解决呢？</p>
+<p>比较好的解决办法就是，主线程给每个子线程都加一把锁，子线程在结束前将锁释放掉，主线程一直循环检查锁的状态。代码如下：</p>
+<p></p>
+<div class="dp-highlighter bg_python"><div class="bar"><div class="tools"><b>[python]</b> <a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 528px; top: 2802px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_4" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_4" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=4&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-py"><li class="alt"><span><span class="keyword">import</span><span>&nbsp;thread&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">class</span><span>&nbsp;Hello:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">def</span><span>&nbsp;__init__(</span><span class="special">self</span><span>,content,lock):&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span><span>&nbsp;content&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">"""</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;do&nbsp;something</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;....</span>&nbsp;</span></li><li class="alt"><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;At&nbsp;the&nbsp;end,release&nbsp;the&nbsp;lock</span>&nbsp;</span></li><li class=""><span><span class="comment">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"""</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lock.release()&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;</span></li><li class="alt"><span><span class="keyword">def</span><span>&nbsp;cs():&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lock=thread.allocate_lock()&nbsp;&nbsp;</span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lock.acquire()&nbsp;&nbsp;</span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;thread.start_new_thread(Hello,&nbsp;(<span class="string">"Hello&nbsp;World"</span><span>,lock))&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">while</span><span>&nbsp;</span><span class="special">True</span><span>:&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">if</span><span>&nbsp;</span><span class="keyword">not</span><span>&nbsp;lock.locked():&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">break</span><span>&nbsp;&nbsp;</span></span></li><li class=""><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">print</span><span>&nbsp;</span><span class="string">"lock&nbsp;release"</span><span>&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;</span></li><li class=""><span><span class="keyword">if</span><span>&nbsp;__name__==</span><span class="string">'__main__'</span><span>:&nbsp;&nbsp;</span></span></li><li class="alt"><span>&nbsp;&nbsp;&nbsp;&nbsp;cs()&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="python" style="display: none;">import thread
+
+class Hello:
+    def __init__(self,content,lock):
+        print content
+        """
+        do something
+        ....
+        At the end,release the lock
+        """
+        lock.release()
+
+def cs():
+        lock=thread.allocate_lock()
+        lock.acquire()
+        thread.start_new_thread(Hello, ("Hello World",lock))
+        while True:
+            if not lock.locked():
+                break
+        print "lock release"
+
+if __name__=='__main__':
+    cs()
+</pre><br>
+结果如下：&nbsp;<div class="dp-highlighter bg_python"><div class="bar"><div class="tools"><b>[python]</b> <a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 528px; top: 3327px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_5" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_5" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=5&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-py"><li class="alt"><span><span>Hello&nbsp;World&nbsp;&nbsp;</span></span></li><li class=""><span>lock&nbsp;release&nbsp;&nbsp;</span></li></ol></div><pre name="code" class="python" style="display: none;">Hello World
+lock release
+</pre><br>
+<p></p>
+<p>二.第二个错误就是比较2的了</p>
+<p></p>
+<div class="dp-highlighter bg_python"><div class="bar"><div class="tools"><b>[python]</b> <a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="ViewSource" title="view plain" onclick="dp.sh.Toolbar.Command(&#39;ViewSource&#39;,this);return false;">view plain</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="CopyToClipboard" title="copy" onclick="dp.sh.Toolbar.Command(&#39;CopyToClipboard&#39;,this);return false;">copy</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="PrintSource" title="print" onclick="dp.sh.Toolbar.Command(&#39;PrintSource&#39;,this);return false;">print</a><a href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" class="About" title="?" onclick="dp.sh.Toolbar.Command(&#39;About&#39;,this);return false;">?</a><div style="position: absolute; left: 528px; top: 3482px; width: 18px; height: 18px; z-index: 99;"><embed id="ZeroClipboardMovie_6" src="http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf" loop="false" menu="false" quality="best" bgcolor="#ffffff" width="18" height="18" name="ZeroClipboardMovie_6" align="middle" allowscriptaccess="always" allowfullscreen="false" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" flashvars="id=6&amp;width=18&amp;height=18" wmode="transparent"></div></div></div><ol start="1" class="dp-py"><li class="alt"><span><span class="special">self</span><span>.source.send[data]&nbsp;&nbsp;</span></span></li><li class=""><span>peError:&nbsp;<span class="string">'builtin_function_or_method'</span><span>&nbsp;object&nbsp;</span><span class="keyword">is</span><span>&nbsp;unsubscriptable&nbsp;&nbsp;</span></span></li></ol></div><pre name="code" class="python" style="display: none;">  self.source.send[data]
+TypeError: 'builtin_function_or_method' object is unsubscriptable</pre><br>
+主要是单词unsubscriptable不认识，呵呵，单词不认识，伤不起啊。
+<p></p>
+<p>主要意思就是说，内置函数或方法无法拥有下标，你懂的，错的很2很2。</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+<p><br>
+</p>
+
+</div>
+
+
+
+<!-- Baidu Button BEGIN -->
+<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" style="float: right;">
+<a class="bds_qzone" title="分享到QQ空间" href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#"></a>
+<a class="bds_tsina" title="分享到新浪微博" href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#"></a>
+<a class="bds_tqq" title="分享到腾讯微博" href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#"></a>
+<a class="bds_renren" title="分享到人人网" href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#"></a>
+<a class="bds_t163" title="分享到网易微博" href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#"></a>
+<span class="bds_more">更多</span>
+<a class="shareCount" href="http://blog.csdn.net/yueguanghaidao/article/details/9277331#" title="累计分享0次">0</a>
+</div>
+<!-- Baidu Button END -->
+
+
+<!--192.168.100.34-->
+<ul class="article_next_prev">
+            <li class="prev_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;]);location.href=&#39;/yueguanghaidao/article/details/9258459&#39;;">上一篇</span><a href="http://blog.csdn.net/yueguanghaidao/article/details/9258459" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_shangyipian&#39;])">毕业---新的开始</a></li>
+            <li class="next_article"><span onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;]);location.href=&#39;/yueguanghaidao/article/details/9316577&#39;;">下一篇</span><a href="http://blog.csdn.net/yueguanghaidao/article/details/9316577" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_xiayipian&#39;])">python实战--Python WebShell 开发 (上)</a></li>
+</ul>
+
+<!-- Baidu Button BEGIN -->
+<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=1536434" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/bds_s_v2.js"></script>
+
+<script type="text/javascript">
+    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+</script>
+<!-- Baidu Button END -->
+
+        <div id="digg" articleid="9277331">
+            <dl id="btnDigg" class="digg digg_disable">
+                <dt onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_ding&#39;])">顶</dt>
+                <dd>3</dd>
+            </dl>
+            <dl id="btnBury" class="digg digg_disable">
+                <dt onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_cai&#39;])">踩</dt>
+                <dd>0</dd>
+            </dl>
+        </div>
+</div>
+      <dl class="blog-associat-tag">
+        <dt>主题推荐</dt>
+        <dd>
+                <a href="http://www.csdn.net/tag/python" target="_blank" class="blog-tage-red">python</a> 
+                <a href="http://www.csdn.net/tag/%E4%BB%A3%E7%90%86%E6%9C%8D%E5%8A%A1%E5%99%A8" target="_blank" class="blog-tage-red">代理服务器</a> 
+                <a href="http://www.csdn.net/tag/exception" target="_blank" class="blog-tage-red">exception</a> 
+                <a href="http://www.csdn.net/tag/%E6%BA%90%E4%BB%A3%E7%A0%81" target="_blank" class="blog-tage-red">源代码</a> 
+                <a href="http://www.csdn.net/tag/something" target="_blank" class="blog-tage-red">something</a> 
+        </dd>
+    </dl> 
+
+
+<dl class="blog-ass-articl tracking-ad" data-mod="popu_36" id="res-relatived"> 
+     <dt><span>猜你在找</span></dt>    
+<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/yueguanghaidao/article/details/21748693" title="PHP结合Python的WEB开发技术 [ppython]" strategy="CFRecommendAlgorithm" target="_blank">PHP结合Python的WEB开发技术 [ppython]</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/baizhiwen_2005/article/details/1181770" title="python的几个内建函数:apply(),filter(),map(),reduce()" strategy="CFRecommendAlgorithm" target="_blank">python的几个内建函数:apply(),filter(),map(),reduce()</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/yueguanghaidao/article/details/25382717" title="[python网络编程]DNS服务器" strategy="CFRecommendAlgorithm" target="_blank">[python网络编程]DNS服务器</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/lmh12506/article/details/7818306" title="python实现模拟登录" strategy="CFRecommendAlgorithm" target="_blank">python实现模拟登录</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/wallwind/article/details/6891618" title="unix环境高级编程-4.8-umask函数" strategy="CFRecommendAlgorithm" target="_blank">unix环境高级编程-4.8-umask函数</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/xuing/article/details/6749566" title="使用HTML5的CANVAS控件绘制GPS状态屏" strategy="CFRecommendAlgorithm" target="_blank">使用HTML5的CANVAS控件绘制GPS状态屏</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/yankai0219/article/details/8453317" title="文章9：Nginx accept互斥锁" strategy="CFRecommendAlgorithm" target="_blank">文章9：Nginx accept互斥锁</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/gexiaobaoHelloWorld/article/details/8070868" title="python-help命令" strategy="CFRecommendAlgorithm" target="_blank">python-help命令</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/whatispython/article/details/19618609" title="node.js和python性能测试（二）" strategy="CFRecommendAlgorithm" target="_blank">node.js和python性能测试（二）</a></dd><dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="http://blog.csdn.net/lzt1983/article/details/7980551" title="开源爬虫larbin安装配置指南" strategy="CFRecommendAlgorithm" target="_blank">开源爬虫larbin安装配置指南</a></dd></dl>
+
+<script type="text/javascript">
+    var searchtitletags = 'python实战--Http代理服务器' + ',' + 'python,代理服务器,exception,源代码,something';
+    searchService({
+        index: 'blog',
+        query: searchtitletags,
+        from: 10,
+        size: 10,
+        appendTo: '#res-relatived',
+        url: 'recommend',
+        his: 2,
+        client: "blog_cf_enhance",
+        tmpl: '<dd style="background:url(http://static.blog.csdn.net/skin/default/images/blog-dot-red3.gif) no-repeat 0 10px;"><a href="#{ url }" title="#{ title }" strategy="#{ strategy }">#{ title }</a></dd>'
+    });
+
+ </script>   
+
+    <div id="ad_cen">
+        <script type="text/javascript">            BAIDU_CLB_SLOT_ID = "117306";</script>
+        <script type="text/javascript" src="http://cbjs.baidu.com/js/o.js"></script>
+    </div>
+    <script type="text/javascript">
+        //new Ad(4, 'ad_cen');
+    </script>
+<div id="comment_title" class="panel_head">
+    查看评论<a name="comments"></a></div>
+<div id="comment_list"><br>&nbsp;&nbsp;暂无评论<br><br><div class="clear"></div></div>
+<div id="comment_bar">
+</div>
+<div id="comment_form"><div class="guest_link">您还没有登录,请<a href="javascript:void(0);" onclick="javascript:csdn.showLogin(function (dat) {js_logined(dat.data.userName);});">[登录]</a>或<a href="http://passport.csdn.net/account/register?from=http%3A%2F%2Fblog.csdn.net%2Fyueguanghaidao%2Farticle%2Fdetails%2F9277331">[注册]</a></div></div>
+<div class="announce">
+    * 以上用户言论只代表其个人观点，不代表CSDN网站的观点或立场<a name="reply"></a><a name="quote"></a></div>
+<script type="text/javascript">
+    var fileName = '9277331';
+    var commentscount = 0;
+    var islock = false
+</script>
+<script type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/comment.js"></script>
+    <div id="ad_bot">
+    </div>
+    <script type="text/javascript">
+    new Ad(5, 'ad_bot');
+    </script>
+<div id="report_dialog">
+</div>
+
+<div id="d-top" style="bottom:60px;">
+      
+
+       <a id="quick-reply" class="btn btn-top q-reply" title="快速回复" style="display:none;">
+            <img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/blog-icon-reply.png" alt="快速回复">
+        </a>    
+
+    <a id="d-top-a" class="btn btn-top backtop" style="display: none;" title="返回顶部" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_huidaodingbu&#39;])">         
+         <img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/top.png" alt="TOP">
+    </a>
+</div>
+<script type="text/javascript">
+    $(function ()
+    {
+        if($("#comment_content").length>0)
+        {
+            $("#quick-reply").show();
+
+            $("#quick-reply").click(function(){
+                setEditorFocus();
+            });
+        }       
+     
+        var d_top = $('#d-top-a');
+        document.onscroll = function ()
+        {
+            var scrTop = (document.body.scrollTop || document.documentElement.scrollTop);
+            if (scrTop > 500)
+            {
+                d_top.show();
+            } else
+            {
+                d_top.hide();
+            }
+        }
+        $('#d-top-a').click(function ()
+        {
+            scrollTo(0, 0);
+            this.blur();
+            return false;
+        });
+    });
+  
+</script>
+<style type="text/css">
+    .tag_list
+    {
+        background: none repeat scroll 0 0 #FFFFFF;
+        border: 1px solid #D7CBC1;
+        color: #000000;
+        font-size: 12px;
+        line-height: 20px;
+        list-style: none outside none;
+        margin: 10px 2% 0 1%;
+        padding: 1px;
+    }
+    .tag_list h5
+    {
+        background: none repeat scroll 0 0 #E0DBD3;
+        color: #47381C;
+        font-size: 12px;
+        height: 24px;
+        line-height: 24px;
+        padding: 0 5px;
+        margin: 0;
+    }
+    .tag_list h5 a
+    {
+        color: #47381C;
+    }
+    .classify
+    {
+        margin: 10px 0;
+        padding: 4px 12px 8px;
+    }
+    .classify a
+    {
+        margin-right: 20px;
+        white-space: nowrap;
+    }
+</style>
+<div class="tag_list">
+    <h5>
+        <a href="http://www.csdn.net/tag/" target="_blank">核心技术类目</a></h5>
+    <div class="classify">
+<a title="全部主题" href="http://www.csdn.net/tag" target="_blank" onclick="LogClickCount(this,336);">全部主题</a>
+<a title="Java" href="http://www.csdn.net/tag/Java" target="_blank" onclick="LogClickCount(this,336);">Java</a>
+<a title="VPN" href="http://www.csdn.net/tag/vpn" target="_blank" onclick="LogClickCount(this,336);">VPN</a>
+<a title="Android" href="http://www.csdn.net/tag/android" target="_blank" onclick="LogClickCount(this,336);">Android</a>
+<a title="iOS" href="http://www.csdn.net/tag/ios" target="_blank" onclick="LogClickCount(this,336);">iOS</a>
+<a title="ERP" href="http://www.csdn.net/tag/erp" target="_blank" onclick="LogClickCount(this,336);">ERP</a>
+<a title="IE10" href="http://www.csdn.net/tag/ie10" target="_blank" onclick="LogClickCount(this,336);">IE10</a>
+<a title="Eclipse" href="http://www.csdn.net/tag/eclipse" target="_blank" onclick="LogClickCount(this,336);">Eclipse</a>
+<a title="CRM" href="http://www.csdn.net/tag/crm" target="_blank" onclick="LogClickCount(this,336);">CRM</a>
+<a title="JavaScript" href="http://www.csdn.net/tag/javascript" target="_blank" onclick="LogClickCount(this,336);">JavaScript</a>
+<a title="Ubuntu" href="http://www.csdn.net/tag/ubuntu" target="_blank" onclick="LogClickCount(this,336);">Ubuntu</a>
+<a title="NFC" href="http://www.csdn.net/tag/nfc" target="_blank" onclick="LogClickCount(this,336);">NFC</a>
+<a title="WAP" href="http://www.csdn.net/tag/wap" target="_blank" onclick="LogClickCount(this,336);">WAP</a>
+<a title="jQuery" href="http://www.csdn.net/tag/jquery" target="_blank" onclick="LogClickCount(this,336);">jQuery</a>
+<a title="数据库" href="http://www.csdn.net/tag/%E6%95%B0%E6%8D%AE%E5%BA%93" target="_blank" onclick="LogClickCount(this,336);">数据库</a>
+<a title="BI" href="http://www.csdn.net/tag/bi" target="_blank" onclick="LogClickCount(this,336);">BI</a>
+<a title="HTML5" href="http://www.csdn.net/tag/html5" target="_blank" onclick="LogClickCount(this,336);">HTML5</a>
+<a title="Spring" href="http://www.csdn.net/tag/spring" target="_blank" onclick="LogClickCount(this,336);">Spring</a>
+<a title="Apache" href="http://www.csdn.net/tag/apache" target="_blank" onclick="LogClickCount(this,336);">Apache</a>
+<a title="Hadoop" href="http://www.csdn.net/tag/hadoop" target="_blank" onclick="LogClickCount(this,336);">Hadoop</a>
+<a title=".NET" href="http://www.csdn.net/tag/.net" target="_blank" onclick="LogClickCount(this,336);">.NET</a>
+<a title="API" href="http://www.csdn.net/tag/api" target="_blank" onclick="LogClickCount(this,336);">API</a>
+<a title="HTML" href="http://www.csdn.net/tag/html" target="_blank" onclick="LogClickCount(this,336);">HTML</a>
+<a title="SDK" href="http://www.csdn.net/tag/sdk" target="_blank" onclick="LogClickCount(this,336);">SDK</a>
+<a title="IIS" href="http://www.csdn.net/tag/iis" target="_blank" onclick="LogClickCount(this,336);">IIS</a>
+<a title="Fedora" href="http://www.csdn.net/tag/fedora" target="_blank" onclick="LogClickCount(this,336);">Fedora</a>
+<a title="XML" href="http://www.csdn.net/tag/xml" target="_blank" onclick="LogClickCount(this,336);">XML</a>
+<a title="LBS" href="http://www.csdn.net/tag/lbs" target="_blank" onclick="LogClickCount(this,336);">LBS</a>
+<a title="Unity" href="http://www.csdn.net/tag/unity" target="_blank" onclick="LogClickCount(this,336);">Unity</a>
+<a title="Splashtop" href="http://www.csdn.net/tag/splashtop" target="_blank" onclick="LogClickCount(this,336);">Splashtop</a>
+<a title="UML" href="http://www.csdn.net/tag/uml" target="_blank" onclick="LogClickCount(this,336);">UML</a>
+<a title="components" href="http://www.csdn.net/tag/components" target="_blank" onclick="LogClickCount(this,336);">components</a>
+<a title="Windows Mobile" href="http://www.csdn.net/tag/windowsmobile" target="_blank" onclick="LogClickCount(this,336);">Windows Mobile</a>
+<a title="Rails" href="http://www.csdn.net/tag/rails" target="_blank" onclick="LogClickCount(this,336);">Rails</a>
+<a title="QEMU" href="http://www.csdn.net/tag/qemu" target="_blank" onclick="LogClickCount(this,336);">QEMU</a>
+<a title="KDE" href="http://www.csdn.net/tag/kde" target="_blank" onclick="LogClickCount(this,336);">KDE</a>
+<a title="Cassandra" href="http://www.csdn.net/tag/cassandra" target="_blank" onclick="LogClickCount(this,336);">Cassandra</a>
+<a title="CloudStack" href="http://www.csdn.net/tag/cloudstack" target="_blank" onclick="LogClickCount(this,336);">CloudStack</a>
+<a title="FTC" href="http://www.csdn.net/tag/ftc" target="_blank" onclick="LogClickCount(this,336);">FTC</a>
+<a title="coremail" href="http://www.csdn.net/tag/coremail" target="_blank" onclick="LogClickCount(this,336);">coremail</a>
+<a title="OPhone " href="http://www.csdn.net/tag/ophone" target="_blank" onclick="LogClickCount(this,336);">OPhone </a>
+<a title="CouchBase" href="http://www.csdn.net/tag/couchbase" target="_blank" onclick="LogClickCount(this,336);">CouchBase</a>
+<a title="云计算" href="http://www.csdn.net/tag/%E4%BA%91%E8%AE%A1%E7%AE%97" target="_blank" onclick="LogClickCount(this,336);">云计算</a>
+<a title="iOS6" href="http://www.csdn.net/tag/iOS6" target="_blank" onclick="LogClickCount(this,336);">iOS6</a>
+<a title="Rackspace " href="http://www.csdn.net/tag/rackspace" target="_blank" onclick="LogClickCount(this,336);">Rackspace </a>
+<a title="Web App" href="http://www.csdn.net/tag/webapp" target="_blank" onclick="LogClickCount(this,336);">Web App</a>
+<a title="SpringSide" href="http://www.csdn.net/tag/springside" target="_blank" onclick="LogClickCount(this,336);">SpringSide</a>
+<a title="Maemo" href="http://www.csdn.net/tag/maemo" target="_blank" onclick="LogClickCount(this,336);">Maemo</a>
+<a title="Compuware" href="http://www.csdn.net/tag/compuware" target="_blank" onclick="LogClickCount(this,336);">Compuware</a>
+<a title="大数据" href="http://www.csdn.net/tag/%E5%A4%A7%E6%95%B0%E6%8D%AE" target="_blank" onclick="LogClickCount(this,336);">大数据</a>
+<a title="aptech" href="http://www.csdn.net/tag/aptech" target="_blank" onclick="LogClickCount(this,336);">aptech</a>
+<a title="Perl" href="http://www.csdn.net/tag/perl" target="_blank" onclick="LogClickCount(this,336);">Perl</a>
+<a title="Tornado" href="http://www.csdn.net/tag/tornado" target="_blank" onclick="LogClickCount(this,336);">Tornado</a>
+<a title="Ruby" href="http://www.csdn.net/tag/ruby" target="_blank" onclick="LogClickCount(this,336);">Ruby</a>
+<a title="Hibernate" href="http://www.csdn.net/hibernate" target="_blank" onclick="LogClickCount(this,336);">Hibernate</a>
+<a title="ThinkPHP" href="http://www.csdn.net/tag/thinkphp" target="_blank" onclick="LogClickCount(this,336);">ThinkPHP</a>
+<a title="Spark" href="http://www.csdn.net/tag/spark" target="_blank" onclick="LogClickCount(this,336);">Spark</a>
+<a title="HBase" href="http://www.csdn.net/tag/hbase" target="_blank" onclick="LogClickCount(this,336);">HBase</a>
+<a title="Pure" href="http://www.csdn.net/tag/pure" target="_blank" onclick="LogClickCount(this,336);">Pure</a>
+<a title="Solr" href="http://www.csdn.net/tag/solr" target="_blank" onclick="LogClickCount(this,336);">Solr</a>
+<a title="Angular" href="http://www.csdn.net/tag/angular" target="_blank" onclick="LogClickCount(this,336);">Angular</a>
+<a title="Cloud Foundry" href="http://www.csdn.net/tag/cloudfoundry" target="_blank" onclick="LogClickCount(this,336);">Cloud Foundry</a>
+<a title="Redis" href="http://www.csdn.net/tag/redis" target="_blank" onclick="LogClickCount(this,336);">Redis</a>
+<a title="Scala" href="http://www.csdn.net/tag/scala" target="_blank" onclick="LogClickCount(this,336);">Scala</a>
+<a title="Django" href="http://www.csdn.net/tag/django" target="_blank" onclick="LogClickCount(this,336);">Django</a>
+<a title="Bootstrap" href="http://www.csdn.net/tag/bootstrap" target="_blank" onclick="LogClickCount(this,336);">Bootstrap</a>
+    </div>
+</div>
+
+                    <div class="clear">
+                    </div>
+                </div>
+            </div>
+            <div id="side">
+    <div class="side">
+<div id="panel_Profile" class="panel">
+<ul class="panel_head"><span>个人资料</span></ul>
+<ul class="panel_body profile">
+<div id="blog_userface">
+    <a href="http://my.csdn.net/yueguanghaidao" target="_blank">
+    <img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/1_yueguanghaidao.jpg" title="访问我的空间" style="max-width:90%">
+    </a>
+    <br>
+    <span><a href="http://my.csdn.net/yueguanghaidao" class="user_name" target="_blank">yueguanghaidao</a></span>
+</div>
+<div class="interact">
+<a href="javascript:void(0);" class="attent" id="span_add_follow" title="[加关注]" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_guanzhu&#39;])"></a>
+<a href="javascript:void(0);" class="letter" onclick="loginto(1)" title="[发私信]"></a>
+</div>
+<div id="blog_medal">
+        <div class="ico_expert" title="CSDN认证专家"></div>
+<div id="bms_box"><a href="http://medal.blog.csdn.net/allmedal.aspx" target="_blank"><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/columnstar_s.gif" onmouseover="m_over_m(this,0)" onmouseout="m_out_m()" alt=""></a><a href="http://medal.blog.csdn.net/allmedal.aspx" target="_blank"><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/holdon_s.gif" onmouseover="m_over_m(this,1)" onmouseout="m_out_m()" alt=""></a></div></div>
+<ul id="blog_rank">
+    <li>访问：<span>133882次</span></li>
+    <li>积分：<span>2368分</span></li>
+    <li>排名：<span>第4648名</span></li>
+</ul>
+<ul id="blog_statistics">
+    <li>原创：<span>85篇</span></li>
+    <li>转载：<span>11篇</span></li>
+    <li>译文：<span>3篇</span></li>
+    <li>评论：<span>90条</span></li>
+</ul>
+</ul>
+</div>
+
+
+<div id="custom_column_27365807" class="panel">
+<ul class="panel_head"><span>有用链接</span></ul>
+<ul class="panel_body">
+
+<a href="https://github.com/Skycrab">My GitHub</a><br>
+<br>
+<a href="mailto:skycrab68@gmail.com">Email Me</a><br>
+<br>
+<a href="http://www.wooyun.org/">乌云漏洞平台</a> <br>
+<br>
+<a href="http://code.google.com/p/zhong-wiki/wiki/PEP8">PEP8中文版</a><br>
+<br>
+<a href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">Python库下载</a><br>
+<br>
+<a href="http://zh-google-styleguide.readthedocs.org/en/latest/google-cpp-styleguide/contents/">Google C++编码规范</a><br>
+<br>
+
+</ul>
+</div><div class="panel" id="panel_Search">
+    <ul class="panel_head"><span>文章搜索</span></ul>
+    <ul class="panel_body">
+        <form id="frmSearch" action="http://so.csdn.net/search" class="form_search" target="_blank">
+        <span><input id="inputSearch" type="text" class="blogsearch" title="请输入关键字"></span>
+        <input id="btnSubmit" type="submit" value="搜索" title="search in blog">
+        <input type="hidden" name="q" id="inputQ">
+        <input type="hidden" name="t" value="blog">
+        <a id="btnSearchBlog" target="_blank"></a>
+        </form>
+    </ul>
+</div><div id="panel_Category" class="panel">
+    <ul class="panel_head"><span>博客专栏</span></ul>
+    <ul class="panel_body" id="sp_column">
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/pytho-socket.html" target="_blank"><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/20140518222143500.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/pytho-socket.html" target="_blank">Python网络编程</a>
+    <p>文章：5篇</p>
+    <span>阅读：1255</span>
+    </td>
+    </tr></tbody></table>
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/pythonic.html" target="_blank"><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/20130908232218578.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/pythonic.html" target="_blank">Python之美[从菜鸟到高手]</a>
+    <p>文章：13篇</p>
+    <span>阅读：19181</span>
+    </td>
+    </tr></tbody></table>
+    <table cellpadding="0" cellspacing="0"><tbody><tr>
+    <td style="padding:10px 10px 0 0;">
+    <a href="http://blog.csdn.net/column/details/practisepython.html" target="_blank"><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/20130709225719671.jpg" style="width:75px;height:75px;"></a>
+    </td>
+    <td style="padding:10px 0; vertical-align:top;">
+    <a href="http://blog.csdn.net/column/details/practisepython.html" target="_blank">Python实战</a>
+    <p>文章：4篇</p>
+    <span>阅读：7922</span>
+    </td>
+    </tr></tbody></table>
+    </ul>
+</div><div id="panel_Category" class="panel">
+<ul class="panel_head"><span>文章分类</span></ul>
+<ul class="panel_body">
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/854532" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Linux</a><span>(20)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/854533" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Cisco</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/863929" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">java</a><span>(0)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/863930" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">c++/c</a><span>(25)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/884229" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">oracle</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/884230" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">windows</a><span>(2)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/901651" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">php</a><span>(4)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/925874" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">mysql</a><span>(5)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/958330" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">python</a><span>(40)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/1129695" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">MongoDB</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/1217938" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">computer system</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/1217939" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">算法</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/1225826" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">设计模式</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/1489713" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">扯淡</a><span>(1)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/1525781" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">网络安全</a><span>(3)</span>
+            </li>
+             <li>
+                <a href="http://blog.csdn.net/yueguanghaidao/article/category/1530813" onclick="_gaq.push([&#39;_trackEvent&#39;,&#39;function&#39;, &#39;onclick&#39;, &#39;blog_articles_wenzhangfenlei&#39;]); ">Javascript</a><span>(2)</span>
+            </li>
+</ul>
+</div><div id="panel_Archive" class="panel">
+<ul class="panel_head"><span>文章存档</span></ul>
+<ul class="panel_body">
+<div id="archive_list"><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2014/05">2014年05月</a><span>(6)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2014/04">2014年04月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2014/03">2014年03月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2013/11">2013年11月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2013/10">2013年10月</a><span>(1)</span></li><span class="hidelist" style="display:none;"><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2013/09">2013年09月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2013/08">2013年08月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2013/07">2013年07月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/12">2012年12月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/10">2012年10月</a><span>(1)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/09">2012年09月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/08">2012年08月</a><span>(3)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/06">2012年06月</a><span>(2)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/05">2012年05月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/04">2012年04月</a><span>(4)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/03">2012年03月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2012/02">2012年02月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2011/12">2011年12月</a><span>(11)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2011/11">2011年11月</a><span>(8)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2011/10">2011年10月</a><span>(7)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2011/09">2011年09月</a><span>(5)</span></li><li><a href="http://blog.csdn.net/yueguanghaidao/article/month/2011/07">2011年07月</a><span>(1)</span></li></span><div id="archive_list_button" class="list_closed">展开</div></div>
+</ul>
+</div>
+<div id="hotarticls" class="panel">
+<ul class="panel_head">
+    <span>       
+阅读排行    </span>
+</ul>
+
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7035248" title="TCP服务器端和客户端程序设计">TCP服务器端和客户端程序设计</a><span>(9967)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7055985" title="UDP服务器端和客户端程序设计">UDP服务器端和客户端程序设计</a><span>(9406)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7355119" title="使用SecureCRT连接Dynamips时, 报错:The remote system refused the connection??前几天还是好好的，奇怪。。">使用SecureCRT连接Dynamips时, 报错:The remote system refused the connection??前几天还是好好的，奇怪。。</a><span>(5650)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/10416867" title="向Python女神推荐这些年我追过的经典书籍">向Python女神推荐这些年我追过的经典书籍</a><span>(5603)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7292065" title="Linux-PAM">Linux-PAM</a><span>(3711)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/6854417" title="Notice: Use of undefined constant out - assumed &#39;out&#39; in D:wampwwwdaoruindex.php on line 4解决办法">Notice: Use of undefined constant out - assumed 'out' in D:wampwwwdaoruindex.php on line 4解决办法</a><span>(3433)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/9568071" title="Js作用域与作用域链详解">Js作用域与作用域链详解</a><span>(3326)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7578144" title="python实战--web.py实战（开发新浪微博应用）">python实战--web.py实战（开发新浪微博应用）</a><span>(3234)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7265246" title="python对XML的解析">python对XML的解析</a><span>(3209)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/11538433" title="Python之美[从菜鸟到高手]--一步一步动手给Python写扩展(爱之初体验)">Python之美[从菜鸟到高手]--一步一步动手给Python写扩展(爱之初体验)</a><span>(3186)</span>
+</li>
+</ul>
+</div>
+<div id="hotarticls2" class="panel">
+<ul class="panel_head"><span>评论排行</span></ul>
+<ul class="panel_body itemlist">
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/10416867" title="向Python女神推荐这些年我追过的经典书籍">向Python女神推荐这些年我追过的经典书籍</a><span>(13)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/9568071" title="Js作用域与作用域链详解">Js作用域与作用域链详解</a><span>(12)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7578144" title="python实战--web.py实战（开发新浪微博应用）">python实战--web.py实战（开发新浪微博应用）</a><span>(10)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7592274" title="C语言计算任意两日期之间天数">C语言计算任意两日期之间天数</a><span>(10)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7471281" title="pyqt开发新浪微博粉丝聊天软件v1(图形界面)">pyqt开发新浪微博粉丝聊天软件v1(图形界面)</a><span>(6)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/8450938" title="C语言开发Linux下web服务器(支持GET/POST,SSL,目录显示等)">C语言开发Linux下web服务器(支持GET/POST,SSL,目录显示等)</a><span>(4)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7605283" title="C链表和文件操作实战--图书管理系统">C链表和文件操作实战--图书管理系统</a><span>(4)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/9258459" title="毕业---新的开始">毕业---新的开始</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/9387425" title="python实战--csdn博客专栏下载器">python实战--csdn博客专栏下载器</a><span>(3)</span>
+</li>
+<li>
+<a href="http://blog.csdn.net/yueguanghaidao/article/details/7265246" title="python对XML的解析">python对XML的解析</a><span>(2)</span>
+</li>
+</ul>
+</div>
+<div id="homepageArticles" class="panel tracking-ad" data-mod="popu_4">
+<ul class="panel_head"><span>推荐文章</span></ul>
+<ul class="panel_body" id="ad_commend"></ul>
+</div>
+<script type="text/javascript">
+ new Ad(12, 'ad_commend');
+</script><div id="newcomments" class="panel">
+<ul class="panel_head"><span>最新评论</span></ul>
+<ul class="panel_body itemlist">
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/10416867#comments">向Python女神推荐这些年我追过的经典书籍</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u012566958" class="user_name">Dingo妹</a>:
+赞
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/7055985#comments">UDP服务器端和客户端程序设计</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/feng2783581" class="user_name">波莱罗舞曲</a>:
+整体来讲，十分受用，谢谢啦！博主辛苦！
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/7055985#comments">UDP服务器端和客户端程序设计</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/feng2783581" class="user_name">波莱罗舞曲</a>:
+gcc -o是上面意思？
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/21748693#comments">PHP结合Python的WEB开发技术 [ppython]</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/yueguanghaidao" class="user_name">yueguanghaidao</a>:
+@wenbin463515485:不好意思哈，我只简单测试了整数类型，字符串没有测试。python3...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/21748693#comments">PHP结合Python的WEB开发技术 [ppython]</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/wenbin463515485" class="user_name">wenbin463515485</a>:
+楼主你的2.x的脚本你测试过吗？运行的时候报错raceback (most recent call ...
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/7035248#comments">TCP服务器端和客户端程序设计</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/u013539183" class="user_name">呆雁</a>:
+写的很好， 详细，代码可用
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/7578144#comments">python实战--web.py实战（开发新浪微博应用）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qdulgh" class="user_name">doudingzhima</a>:
+运行后只显示：http://0.0.0.0:8080/这是为啥
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/7578144#comments">python实战--web.py实战（开发新浪微博应用）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/yueguanghaidao" class="user_name">yueguanghaidao</a>:
+@qdulgh:web.py是一个python的web框架，需要自己下载
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/7578144#comments">python实战--web.py实战（开发新浪微博应用）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qdulgh" class="user_name">doudingzhima</a>:
+运行环境都没怎么介绍啊，让人纠结。。。。
+    </p>
+    </li>
+    <li>
+   
+         <a href="http://blog.csdn.net/yueguanghaidao/article/details/7578144#comments">python实战--web.py实战（开发新浪微博应用）</a>
+    <p style="margin:0px;"><a href="http://blog.csdn.net/qdulgh" class="user_name">doudingzhima</a>:
+Traceback (most recent call last):  File "F:\dev i...
+    </p>
+    </li>
+</ul>
+</div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+
+            <div class="clear">
+            </div>
+        </div>
+        
+
+<script type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/newblog.min.js"></script>
+<script type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/showblogmedal.ashx"></script>
+<script type="text/javascript">
+    document.write('<script type="text/javascript" src="http://csdnimg.cn/pubfooter/js/publib_footer.js?' + Math.floor(new Date() / 120000).toString(36) + '="></' + 'script>');
+</script><script type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/publib_footer.js"></script><link rel="stylesheet" type="text/css" href="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/pub_footer_2012.css"><div id="pub_footerall" class="pub_footerall"><dl><dt></dt> <dd><a href="http://www.csdn.net/company/about.html" target="_blank">公司简介</a>|<a href="http://www.csdn.net/company/recruit.html" target="_blank">招贤纳士</a>|<a href="http://www.csdn.net/company/marketing.html" target="_blank">广告服务</a>|<a href="http://www.csdn.net/company/account.html" target="_blank">银行汇款帐号</a>|<a href="http://www.csdn.net/company/contact.html" target="_blank">联系方式</a>|<a href="http://www.csdn.net/company/statement.html" target="_blank">版权声明</a>|<a href="http://www.csdn.net/company/layer.html" target="_blank">法律顾问</a>|<a href="mailto:webmaster@csdn.net">问题报告</a>|<a target="_blank" href="http://www.csdn.net/friendlink.html">合作伙伴</a>|<a href="http://bbs.csdn.net/forums/Service" target="_blank">论坛反馈</a></dd><dd><a href="http://wpa.qq.com/msgrd?v=3&uin=2355263776&site=qq&menu=yes" target="_blank" class="qq">网站客服</a> <a href="http://wpa.qq.com/msgrd?v=3&uin=2251809102&site=qq&menu=yes" target="_blank" class="qq">杂志客服</a> <a href="http://e.weibo.com/csdnsupport/profile" target="_blank" class="weibo">微博客服</a> <a href="mailto:webmaster@csdn.net" class="email" title="联系邮箱">webmaster@csdn.net</a> <span class="phone" title="服务热线">400-600-2320</span></dd><dd>京&nbsp;ICP&nbsp;证&nbsp;070598&nbsp;号</dd><dd>北京创新乐知信息技术有限公司 版权所有</dd><dd>江苏乐知网络技术有限公司 提供商务支持</dd><dd>Copyright © 1999-2014, CSDN.NET, All Rights Reserved&nbsp;<a href="http://www.hd315.gov.cn/beian/view.asp?bianhao=010202001032100010" target="_blank"><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/gongshang_logos.gif" alt="GongshangLogo" title=""></a></dd></dl></div><div id="note1" class="csdn_note" style="display:none; position:absolute; z-index:9999; width:440px">  <span class="notice_top_arrow"><span class="inner"></span></span>  <div class="box"></div></div><div class="csdn_notice_tip" style="display: none; position: absolute; z-index: 9990; width: 170px;">  <iframe src="about:blank" frameborder="0" scrolling="no" style="z-index:-1;position:absolute;top:0;left:0;width:100%;height:100%;background:transparent"></iframe>  <div class="tip_text">您有<strong>0</strong>条新通知</div>  <a href="javascript:void 0" class="close2"></a></div><script id="noticeScript" type="text/javascript" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/notify.js"></script>
+    <script type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/login.js"></script>
+<script type="text/javascript">document.write("<img src=http://counter.csdn.net/pv.aspx?id=24 border=0 width=0 height=0>");</script><img src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/pv.aspx" border="0" width="0" height="0">
+<script type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/counter.js"></script><script type="text/javascript" charset="UTF-8" src="http://message.csdn.net/msg.popup.js"></script>
+<script type="text/javascript" src="http://ad.csdn.net/scripts/ad-blog.js"></script>
+<script type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/count.js"></script><iframe src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/logs.htm" frameborder="0" width="0" height="0"></iframe>
+<script type="text/javascript">
+    $(function () {
+        function __get_code_toolbar(snippet_id) {
+            return $("<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "' target='_blank' title='在CODE上查看代码片' style='text-indent:0;'><img src='https://code.csdn.net/assets/CODE_ico.png' width=12 height=12 alt='在CODE上查看代码片' style='position:relative;top:1px;left:2px;'/></a>"
+                    + "<a href='https://code.csdn.net/snippets/"
+                    + snippet_id
+                    + "/fork' target='_blank' title='派生到我的代码片'  style='text-indent:0;'><img src='https://code.csdn.net/assets/ico_fork.svg' width=12 height=12 alt='派生到我的代码片' style='position:relative;top:2px;left:2px;'/></a>");
+        }
+        
+        $("[code_snippet_id]").each(function () {
+            __s_id = $(this).attr("code_snippet_id");
+            if (__s_id != null && __s_id != "" && __s_id != 0 && parseInt(__s_id) > 70020) {
+                __code_tool = __get_code_toolbar(__s_id);
+                $(this).prev().find(".tools").append(__code_tool);
+            }
+        });
+    });
+</script>
+
+    </div>
+      <!--new top-->
+    
+    <script id="csdn-toolbar-id" btnid="header_notice_num" wrapid="note1" count="5" subcount="5" type="text/javascript" src="./python实战--Http代理服务器 - Skycrab - 博客频道 - CSDN.NET_files/toolbar.js"></script>
+     <!--new top-->
+
+
+</body></html>
