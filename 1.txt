@@ -1,0 +1,384 @@
+
+Read g_errFilter: ['Error Status (0x4803) occurs at line 145 in "G:\\ITF\\SOURCE\\read2dc.c" file.', "cannot get firmware version in one invalid channel! This channel doesn't connect camera error!", 'NEW_R\tNIL\tMax Error Allowed is reset to 1000', 'set wafer id time fail!m_ulSetDevIDTime', 'NIL\tFILE_ImageSize error!', 'NIL\tCheck NPtTTV Offset x Fail, Current', 'NIL\tCheck NPtTTV Offset y Fail, Current', 'Fail in DOS_CopyFile return from boost is boost::filesystem::copy_file: The system cannot find the file specified: "record\\light_0.inf",', 'Error Status (0x3705) occurs at line 64 in "G:\\Itf\\Source\\2Dcode\\2DCODE_LEARN.C" file.', 'Error Status (0x3705) occurs at line 249 in "G:\\Itf\\Source\\SMT\\Learn.c" file.', 'ignore error HRM_ERR_NOT_INITIALIZED', "This channel doesn't connect camera error", 'ror(0x4803) occurs at line 145 in "G:\\ITF\\SOURCE\\read2dc']
+
+
+C:\WinEagle\log\AutoRpt_17\glm_all.log
+176	Event	20150902	115708	DS	NIL	Error Status (0x7039) ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH occurs at line 8093 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+178	Event	20150902	115708	DS	NIL	Error Status (0x7039) ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH occurs at line 4429 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+180	Error	20150902	115708	DS	NIL	Error(0x7039) occurs at line 4565 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+181	Error	20150902	115708	DS	NIL	Error(0x7039) occurs at line 4566 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+183	Event	20150902	115708	DS	NIL	Error Status (0x7039) ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH occurs at line 2070 in "G:\Itf\Source\solar3d\Message.cpp" file.
+185	Error	20150902	115708	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x7039, msg type 2
+186	Event	20150902	115735	DS	NIL	Error Status (0x7039) ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH occurs at line 8093 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+188	Event	20150902	115735	DS	NIL	Error Status (0x7039) ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH occurs at line 4429 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+190	Error	20150902	115735	DS	NIL	Error(0x7039) occurs at line 4565 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+191	Error	20150902	115735	DS	NIL	Error(0x7039) occurs at line 4566 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+193	Event	20150902	115735	DS	NIL	Error Status (0x7039) ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH occurs at line 2070 in "G:\Itf\Source\solar3d\Message.cpp" file.
+195	Error	20150902	115735	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x7039, msg type 2
+
+C:\WinEagle\log\AutoRpt_2\glm_all.log
+177	Event	20150902	113425	DS	NIL	Error Status (0x061f) Unclassified Error occurs at line 1953 in "G:\Itf\Source\solar3d\CalibrationRecord.cpp" file.
+179	Error	20150902	113426	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x61f, msg type 16
+
+C:\WinEagle\log\AutoRpt_22\glm_all.log
+177	Error	20150902	120601	solar3d	NIL	threshold for y roi fail. rMean 0.000000 expectMin: 32.400002
+178	Event	20150902	120601	DS	NIL	Error Status (0x700f) ASMVISION_ERR_PROFILE_TOO_SMALL occurs at line 1184 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+180	Event	20150902	120601	DS	NIL	Error Status (0x700f) ASMVISION_ERR_PROFILE_TOO_SMALL occurs at line 8027 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+182	Event	20150902	120601	DS	NIL	Error Status (0x700f) ASMVISION_ERR_PROFILE_TOO_SMALL occurs at line 4429 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+184	Error	20150902	120601	DS	NIL	Error(0x700f) occurs at line 4565 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+185	Error	20150902	120601	DS	NIL	Error(0x700f) occurs at line 4566 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+187	Error	20150902	120601	G:\Itf\Source\solar3d\VisionSystem.cpp	NIL	WaitGrabDoneAndConstructAndInspect_Internal fail devid 0 1 status 0x700f(ASMVISION_ERR_PROFILE_TOO_SMALL)
+
+C:\WinEagle\log\AutoRpt_26\glm_all.log
+173	Error	20150902	120909	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+174	Error	20150902	120909	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+178	Error	20150902	120910	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+179	Error	20150902	120910	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+181	Error	20150902	120911	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+182	Error	20150902	120911	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+184	Error	20150902	120913	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+185	Error	20150902	120913	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+187	Error	20150902	120914	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+188	Error	20150902	120914	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+190	Error	20150902	120915	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+191	Error	20150902	120915	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+193	Error	20150902	120916	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+194	Error	20150902	120916	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+196	Error	20150902	120917	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+197	Error	20150902	120917	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+199	Error	20150902	120918	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+200	Error	20150902	120918	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+202	Error	20150902	120919	ITF	NIL	ReadImgOffsetFromInfoLogFile Error!
+203	Error	20150902	120919	ITF	NIL	ITF_GetAutoRepeatStationID Error: -1f03h
+
+C:\WinEagle\log\AutoRpt_29\glm_all.log
+177	Event	20150902	121525	DS	NIL	Error Status (0x061f) Unclassified Error occurs at line 4078 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+179	Event	20150902	121525	DS	NIL	Error Status (0x061f) Unclassified Error occurs at line 4651 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+
+C:\WinEagle\log\AutoRpt_30\glm_all.log
+91	Error	20150902	121610	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_16_10_1__.bmp
+92	Error	20150902	121613	SOLAR	NIL	Fake Image found, uwSetIdx =63 uwCameraIdx=5
+93	Error	20150902	121613	SOLAR	NIL	Fake Image found, uwSetIdx =64 uwCameraIdx=5
+94	Error	20150902	121613	SOLAR	NIL	Fake Image found, uwSetIdx =65 uwCameraIdx=5
+95	Error	20150902	121624	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_16_24_2__.bmp
+96	Error	20150902	121624	SOLAR	NIL	Fake Image found, uwSetIdx =50 uwCameraIdx=5
+97	Error	20150902	121624	SOLAR	NIL	Fake Image found, uwSetIdx =51 uwCameraIdx=5
+98	Error	20150902	121624	SOLAR	NIL	Fake Image found, uwSetIdx =52 uwCameraIdx=5
+99	Error	20150902	121624	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_16_24_3__.bmp
+100	Error	20150902	121624	SOLAR	NIL	Fake Image found, uwSetIdx =63 uwCameraIdx=5
+101	Error	20150902	121624	SOLAR	NIL	Fake Image found, uwSetIdx =64 uwCameraIdx=5
+102	Error	20150902	121624	SOLAR	NIL	Fake Image found, uwSetIdx =65 uwCameraIdx=5
+103	Error	20150902	121637	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_16_37_4__.bmp
+104	Error	20150902	121637	SOLAR	NIL	Fake Image found, uwSetIdx =63 uwCameraIdx=5
+105	Error	20150902	121637	SOLAR	NIL	Fake Image found, uwSetIdx =64 uwCameraIdx=5
+106	Error	20150902	121637	SOLAR	NIL	Fake Image found, uwSetIdx =65 uwCameraIdx=5
+107	Error	20150902	121736	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_17_36_5__.bmp
+108	Error	20150902	121736	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+109	Error	20150902	121736	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+110	Error	20150902	121736	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+111	Error	20150902	121800	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_18_00_6__.bmp
+112	Error	20150902	121800	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+113	Error	20150902	121800	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+114	Error	20150902	121800	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+115	Error	20150902	121936	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_19_36_7__.bmp
+116	Error	20150902	121936	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+117	Error	20150902	121936	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+118	Error	20150902	121936	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+119	Error	20150902	121948	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_19_48_8__.bmp
+120	Error	20150902	121948	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+121	Error	20150902	121948	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+122	Error	20150902	121948	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+123	Error	20150902	122000	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_20_00_9__.bmp
+124	Error	20150902	122000	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+125	Error	20150902	122000	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+126	Error	20150902	122000	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+127	Error	20150902	122012	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_20_12_10__.bmp
+128	Error	20150902	122012	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+129	Error	20150902	122012	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+130	Error	20150902	122012	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+131	Error	20150902	122023	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_20_23_11__.bmp
+132	Error	20150902	122023	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+133	Error	20150902	122023	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+134	Error	20150902	122023	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+135	Error	20150902	122047	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_20_47_12__.bmp
+136	Error	20150902	122047	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+137	Error	20150902	122047	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+138	Error	20150902	122047	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+139	Error	20150902	122111	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_21_11_13__.bmp
+140	Error	20150902	122111	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+141	Error	20150902	122111	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+142	Error	20150902	122111	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+143	Error	20150902	122134	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_21_34_14__.bmp
+144	Error	20150902	122134	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+145	Error	20150902	122134	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+146	Error	20150902	122134	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+147	Error	20150902	122146	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_21_46_15__.bmp
+148	Error	20150902	122146	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+149	Error	20150902	122146	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+150	Error	20150902	122146	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+151	Error	20150902	122159	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_21_59_16__.bmp
+152	Error	20150902	122159	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+153	Error	20150902	122159	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+154	Error	20150902	122159	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+155	Error	20150902	122211	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_22_11_17__.bmp
+156	Error	20150902	122211	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+157	Error	20150902	122211	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+158	Error	20150902	122211	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+159	Error	20150902	122222	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_22_22_18__.bmp
+160	Error	20150902	122222	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+161	Error	20150902	122222	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+162	Error	20150902	122222	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+163	Error	20150902	122234	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_22_34_19__.bmp
+164	Error	20150902	122234	SOLAR	NIL	Fake Image found, uwSetIdx =7 uwCameraIdx=2
+165	Error	20150902	122234	SOLAR	NIL	Fake Image found, uwSetIdx =8 uwCameraIdx=2
+166	Error	20150902	122234	SOLAR	NIL	Fake Image found, uwSetIdx =9 uwCameraIdx=2
+167	Error	20150902	122246	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_22_46_20__.bmp
+168	Error	20150902	122246	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+169	Error	20150902	122246	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+170	Error	20150902	122246	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+171	Error	20150902	122323	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_23_23_21__.bmp
+172	Error	20150902	122323	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+173	Error	20150902	122323	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+174	Error	20150902	122323	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+175	Error	20150902	122335	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_23_35_22__.bmp
+176	Error	20150902	122335	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+177	Error	20150902	122335	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+178	Error	20150902	122335	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+179	Error	20150902	122347	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_23_47_23__.bmp
+180	Error	20150902	122347	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+181	Error	20150902	122347	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+182	Error	20150902	122347	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+183	Error	20150902	122411	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_24_11_24__.bmp
+184	Error	20150902	122411	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+185	Error	20150902	122411	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+186	Error	20150902	122411	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+187	Error	20150902	122422	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_24_22_25__.bmp
+188	Error	20150902	122422	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+189	Error	20150902	122422	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+190	Error	20150902	122422	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+191	Error	20150902	122434	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_24_34_26__.bmp
+192	Error	20150902	122434	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+193	Error	20150902	122434	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+194	Error	20150902	122434	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+195	Error	20150902	122446	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_24_46_27__.bmp
+196	Error	20150902	122446	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+197	Error	20150902	122446	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+198	Error	20150902	122446	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+199	Error	20150902	122709	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_27_09_28__.bmp
+200	Error	20150902	122709	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+201	Error	20150902	122709	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+202	Error	20150902	122709	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+203	Error	20150902	122745	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_27_45_29__.bmp
+204	Error	20150902	122745	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+205	Error	20150902	122745	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+206	Error	20150902	122745	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+207	Error	20150902	122757	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_27_57_30__.bmp
+208	Error	20150902	122757	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+209	Error	20150902	122757	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+210	Error	20150902	122757	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+211	Error	20150902	122809	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_28_09_31__.bmp
+212	Error	20150902	122809	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+213	Error	20150902	122809	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+214	Error	20150902	122809	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+215	Error	20150902	122821	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_28_21_32__.bmp
+216	Error	20150902	122821	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+217	Error	20150902	122821	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+218	Error	20150902	122821	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+219	Error	20150902	122832	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_28_32_33__.bmp
+220	Error	20150902	122832	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+221	Error	20150902	122832	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+222	Error	20150902	122832	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+223	Error	20150902	123044	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_30_44_34__.bmp
+224	Error	20150902	123044	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+225	Error	20150902	123044	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+226	Error	20150902	123044	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+227	Error	20150902	123056	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_30_56_35__.bmp
+228	Error	20150902	123056	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+229	Error	20150902	123056	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+230	Error	20150902	123056	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+231	Error	20150902	123108	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_31_08_36__.bmp
+232	Error	20150902	123108	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+233	Error	20150902	123108	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+234	Error	20150902	123108	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+235	Error	20150902	123119	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_31_19_37__.bmp
+236	Error	20150902	123119	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+237	Error	20150902	123119	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+238	Error	20150902	123119	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+239	Error	20150902	123131	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_31_31_38__.bmp
+240	Error	20150902	123131	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+241	Error	20150902	123131	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+242	Error	20150902	123131	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+243	Error	20150902	123155	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_31_55_39__.bmp
+244	Error	20150902	123155	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+245	Error	20150902	123155	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+246	Error	20150902	123155	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+247	Error	20150902	123207	solar3d	NIL	Fake Image saved to c:/wineagle/log/fakeImg2015_09_02_12_32_07_40__.bmp
+248	Error	20150902	123207	SOLAR	NIL	Fake Image found, uwSetIdx =1 uwCameraIdx=0
+249	Error	20150902	123207	SOLAR	NIL	Fake Image found, uwSetIdx =2 uwCameraIdx=0
+250	Error	20150902	123207	SOLAR	NIL	Fake Image found, uwSetIdx =3 uwCameraIdx=0
+
+C:\WinEagle\log\AutoRpt_31\glm_all.log
+178	Event	20150902	123359	DS	NIL	Error Status (0x050c) Unclassified Error occurs at line 2976 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+180	Event	20150902	123359	DS	NIL	Error Status (0x050c) Unclassified Error occurs at line 3318 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+182	Event	20150902	123359	DS	NIL	Error Status (0x050c) Unclassified Error occurs at line 6665 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+184	Event	20150902	123359	DS	NIL	Error Status (0x050c) Unclassified Error occurs at line 8472 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+186	Event	20150902	123359	DS	NIL	Error Status (0x050c) Unclassified Error occurs at line 4429 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+188	Error	20150902	123359	DS	NIL	Error(0x050c) occurs at line 4565 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+189	Error	20150902	123359	DS	NIL	Error(0x050c) occurs at line 4566 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+190	Event	20150902	123359	Solar3D	NIL	Status -1292 Unclassified Error occurs at line 4747 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+191	Event	20150902	123359	DS	NIL	Error Status (0x050c) Unclassified Error occurs at line 2070 in "G:\Itf\Source\solar3d\Message.cpp" file.
+193	Error	20150902	123359	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x50c, msg type 2
+194	Error	20150902	123359	ITF	NIL	AsmVision::CalibrationRecord::ChkIsPatternLrnt() RPattern is not learnt
+195	Event	20150902	123359	DS	NIL	Error Status (0x7017) ASMVISION_ERR_NEED_RELEARN occurs at line 858 in "G:\Itf\Source\solar3d\Message.cpp" file.
+197	Error	20150902	123359	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x7017, msg type 1
+
+C:\WinEagle\log\AutoRpt_32\glm_all.log
+90	Event	20150902	123427	DS	NIL	Error Status (0x7037) ASMVISION_ERR_CALREC_GENERAL_CHK occurs at line 1252 in "G:\Itf\Source\solar3d\CalibrationRecord.cpp" file.
+92	Event	20150902	123427	DS	NIL	Error Status (0x7037) ASMVISION_ERR_CALREC_GENERAL_CHK occurs at line 1957 in "G:\Itf\Source\solar3d\CalibrationRecord.cpp" file.
+94	Error	20150902	123427	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x7037, msg type 16
+95	Event	20150902	123434	DS	NIL	Error Status (0x7037) ASMVISION_ERR_CALREC_GENERAL_CHK occurs at line 1252 in "G:\Itf\Source\solar3d\CalibrationRecord.cpp" file.
+97	Event	20150902	123434	DS	NIL	Error Status (0x7037) ASMVISION_ERR_CALREC_GENERAL_CHK occurs at line 1957 in "G:\Itf\Source\solar3d\CalibrationRecord.cpp" file.
+99	Error	20150902	123434	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x7037, msg type 16
+100	Event	20150902	123434	DS	NIL	Error Status (0x7007) ASMVISION_ERR_NOT_CALIBRATED occurs at line 3265 in "G:\Itf\Source\solar3d\CalibrationRecord.cpp" file.
+102	Error	20150902	123434	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x7007, msg type 16
+103	Error	20150902	123434	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x7007, msg type 4
+104	Event	20150902	123434	DS	NIL	Error Status (0x7007) ASMVISION_ERR_NOT_CALIBRATED occurs at line 2242 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+106	Event	20150902	123434	DS	NIL	Error Status (0x7007) ASMVISION_ERR_NOT_CALIBRATED occurs at line 789 in "G:\Itf\Source\solar3d\Message.cpp" file.
+108	Event	20150902	123434	DS	NIL	Error Status (0x7007) ASMVISION_ERR_NOT_CALIBRATED occurs at line 2039 in "G:\Itf\Source\solar3d\Message.cpp" file.
+110	Error	20150902	123434	ITF	NIL	AsmVision::Comm::ProcessMessageProcessMessage return -0x7007, msg type 2
+
+C:\WinEagle\log\AutoRpt_34\glm_all.log
+20	Error	20150902	134004	Optics	NIL	C:\WinEagle\System\ConfigurationDB\Optics\08-E000391(Solar3DShinyTop).txt Not exist!
+24	Error	20150902	134004	VSINFO	NIL	Get Active Station Info Fail!
+27	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+38	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+39	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+40	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+42	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+43	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+44	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+46	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+47	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+48	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+50	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+51	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+52	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+54	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+55	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+56	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+58	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+59	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+60	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+62	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+63	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+64	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+66	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+67	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+68	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+70	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+71	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+72	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+74	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+75	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+76	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+78	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+79	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+80	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+82	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+83	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+84	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+86	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+87	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+88	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+90	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+91	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+92	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+94	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+95	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+96	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+98	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+99	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+100	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+103	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+105	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+107	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+109	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+111	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+113	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+115	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+117	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+119	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+121	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+123	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+125	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+127	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+129	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+131	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+133	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+135	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+137	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+139	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+141	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+143	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+145	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+147	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+149	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+151	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+153	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+155	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+157	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+159	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+161	Error	20150902	134004	ITF	NIL	Cannot init Grab Para, stationID = 0
+163	Error	20150902	134004	ITF	NIL	Cannot init thread para, ThreadStationID = 1
+165	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+166	Error	20150902	134004	purpose2	NIL	Error assert wStation > 160 Line 870
+168	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+169	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+170	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+172	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+173	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+174	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+220	Error	20150902	134004	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+221	Error	20150902	134004	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+222	Error	20150902	134004	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+228	Error	20150902	134005	ITF	NIL	Cannot init thread para, ThreadStationID = 161
+230	Error	20150902	134005	ITF	NIL	Cannot init thread para, ThreadStationID = 161
+232	Error	20150902	134005	ITF	NIL	Cannot init thread para, ThreadStationID = 1
+234	Error	20150902	134005	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+235	Error	20150902	134005	purpose2	NIL	Error assert wStation > 160 Line 870
+237	Error	20150902	134005	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+238	Error	20150902	134005	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+239	Error	20150902	134005	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+241	Error	20150902	134005	ITF	NIL	Cannot init thread para, ThreadStationID = 1
+243	Error	20150902	134005	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+244	Error	20150902	134005	purpose2	NIL	Error assert wStation > 160 Line 870
+246	Error	20150902	134005	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+247	Error	20150902	134005	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+248	Error	20150902	134005	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+250	Error	20150902	134005	ITF	NIL	Cannot init thread para, ThreadStationID = 1
+252	Error	20150902	134005	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+253	Error	20150902	134005	purpose2	NIL	Error assert wStation > 160 Line 870
+255	Error	20150902	134005	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+256	Error	20150902	134005	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+257	Error	20150902	134005	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+259	Error	20150902	134005	itf_config.c	NIL	Active station ID is invalid.Active station is 0.
+260	Error	20150902	134005	DS	NIL	Error(0x0001) occurs at line 89 in "G:\ITF\SOURCE\ZoomSensorLV.C" file.
+261	Error	20150902	134005	ITF_GetActiveStationID FAIL!	NIL	Station: 0,(G:\ITF\SOURCE\ZoomSensorLV.C, 93)
+263	Error	20150902	134005	G:\Itf\Source\solar3d\Configuration.cpp	NIL	line 1801, Error assert pstStationInfo
+265	Error	20150902	134005	G:\Itf\Source\solar3d\Configuration.cpp	NIL	line 1801, Error assert pstStationInfo
+268	Error	20150902	134005	ChgCamFcn	NIL	(G:\VisionProc\GeneralAppUI\Callback\Source\VisionProcITFCallBack.cpp, 131) ITF_GetStationInfoByIndex() fail, wSysIndex = 0
+270	Error	20150902	134005	ITF	NIL	Cannot init thread para, ThreadStationID = 161
+272	Error	20150902	134005	ITF	NIL	Cannot init thread para, ThreadStationID = 161
+
+C:\WinEagle\log\AutoRpt_4\glm_all.log
+176	Event	20150902	113835	DS	NIL	Error Status (0x703c) ASMVISION_ERR_REF_CHECK occurs at line 4323 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+178	Error	20150902	113835	DS	NIL	Error(0x703c) occurs at line 4565 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+179	Error	20150902	113835	DS	NIL	Error(0x703c) occurs at line 4566 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+181	Error	20150902	113835	G:\Itf\Source\solar3d\VisionSystem.cpp	NIL	WaitGrabDoneAndConstructAndInspect_Internal fail devid 0 4 status 0x703c(ASMVISION_ERR_REF_CHECK)
+
+C:\WinEagle\log\AutoRpt_6\glm_all.log
+175	Event	20150902	113951	DS	NIL	Error Status (0x7039) ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH occurs at line 8093 in "G:\Itf\Source\solar3d\AlgThm.cpp" file.
+177	Event	20150902	113951	DS	NIL	Error Status (0x7039) ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH occurs at line 4429 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+179	Error	20150902	113951	DS	NIL	Error(0x7039) occurs at line 4565 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+180	Error	20150902	113951	DS	NIL	Error(0x7039) occurs at line 4566 in "G:\Itf\Source\solar3d\InspectJob.cpp" file.
+182	Error	20150902	113951	G:\Itf\Source\solar3d\VisionSystem.cpp	NIL	WaitGrabDoneAndConstructAndInspect_Internal fail devid 0 2 status 0x7039(ASMVISION_ERR_WAFER_ANGLE_LR_MISMATCH)

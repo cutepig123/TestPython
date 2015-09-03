@@ -1,0 +1,94 @@
+import os,sys
+
+def getRange(line):
+	p1 = line.find('open_Max_win(this)')
+	assert(p1>0)
+	p2= line.find('<td>',p1)
+	assert(p2>0)
+	p3= line.find('</td>',p2)
+	assert(p3>0)
+	value = line[p2+len('<td>'):p3]
+	
+	print value,
+	value = float(value)
+	return value
+	
+def processFile( input_file, output_file, id ):
+	fp=open(input_file,'r')
+	
+	fpw=open(output_file,'a')
+	head = '<table name="summary" border="1"><tr><td>Camera</td><td>Row</td><td>Partition</td><td>Property</td><td>Sample Taken</td><td>Average</td><td>3SD</td><td>Min</td><td>Max</td><td>Range</td><td>Acceptance Range</td><td >Min Directory</td><td ">Max Directory</td></tr><tr style="display : none"><td>MyNumber</td><td>MyNumber</td><td>MyNumber</td><td>MyString</td><td>MyNumber</td><td>MyNumber</td><td>MyNumber</td><td>MyNumber</td><td>MyNumber</td><td>MyNumber</td><td>MyNumber</td><td>MyString</td><td>MyString</td></tr>'
+	tail='</table>'
+	fpw.writelines([ '%d:<font color=red>%s</font><br>'%(id, input_file ), head])
+	
+	#  ## Find max thickness for partition/all
+	max_thick_range_all=0
+	max_thick_all_line = ""
+	
+	max_thick_range_partition=0
+	max_thick_line = ""
+	
+	max_TTV_range=0
+	max_TTV_line = ""
+	for line in fp.readlines():
+		line = line.replace('<td style="display : none">','<td>')
+		if line.find('<td>Thickness</td>')>=0:
+			#print line
+			value = getRange(line)
+			
+			if value>max_thick_range_partition:
+				max_thick_range_partition = value
+				max_thick_line = line
+				
+			if line.find('<td>-</td>')>=0:
+				if value>max_thick_range_all:
+					max_thick_range_all = value
+					max_thick_all_line = line
+					
+		if line.find('<td>TTV</td>')>=0:
+			#print line
+			value = getRange(line)
+			
+			if value>max_TTV_range:
+				max_TTV_range = value
+				max_TTV_line = line
+			
+	#print "max_thick_range_partition:", max_thick_range_partition,	max_thick_line	
+	fpw.writelines([max_thick_all_line, max_thick_line, max_TTV_line, tail])
+	fpw.close()
+	fp.close()
+
+def processAll(top,output_file):
+	for root, dirs, files in os.walk(top, topdown=False):	
+		for name in files:	
+			if name == 'Summary.html':
+				fileName=os.path.join(root, name)
+				print fileName
+				processFile( fileName, output_file,0 )
+				
+	
+def processAll2(top,output_file):
+	global id
+	print top
+	for dir in os.listdir(top):
+		dirName=os.path.join(top, dir)
+		if not os.path.isdir(dirName):
+			continue
+		if dir.startswith('WIS'):
+			continue
+		if dir == 'Solar Inspection':
+			fileName=os.path.join(dirName, 'Summary.html')
+			print fileName
+			id = id+1
+			processFile( fileName, output_file,id )
+		else:
+			
+			processAll2(dirName, output_file)
+
+input_folder=sys.argv[1]
+output_file=input_folder+"\\out.htm"
+fpw=open(output_file,'w')
+fpw.close()
+id=0
+processAll2(input_folder, output_file)
+os.system(output_file)

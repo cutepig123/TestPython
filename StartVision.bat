@@ -1,0 +1,24 @@
+set ASM_VIS_CSYS_VER=latest
+set ASM_VIS_DPR_SI=N:\DPRSI\dummy
+set ASM_VIS_DPR_SI_VER=dummy
+set ASM_VIS_FILE_MGT=C:\WinEagle\log
+set ASM_VIS_FILE_MGT_INSPECT=C:\WinEagle\log\insp
+set ASM_VIS_FILE_MGT_LEARN=C:\WinEagle\log\lrn
+set ASM_VIS_FILE_MGT_OCR=C:\WinEagle\log\ocr
+set ASM_VIS_HIPEC=J:\App\Public\HiPECRevII
+set ASM_VIS_HMIFRAMEIV=J:\App\Public\FRAMEIVr5spc
+set ASM_VIS_HMI_CC=X:\SWREELib\SPC\V1-12-01\F4R5
+set ASM_VIS_IO_DRV=C:\WinEagle
+set ASM_VIS_LOG_DATA=C:\WinEagle\log
+set ASM_VIS_LOG_SAU_DATA=C:\WinEagle\sau
+set ASM_VIS_ROOT=C:\WinEagle
+set ASM_VIS_SHA_MGT_LEARN=C:\WinEagle\log\lrn\sha
+set ASM_VIS_SHA_MGT_SEARCH=C:\WinEagle\log\Insp\sha
+set ASM_VIS_TCP_SI=X:\EELIB\TCP_SI\dummy
+set ASM_VIS_TCP_SI_VER=dummy
+set ASM_VIS_WinGDDriver=X:\EELIB\WinGDDriver
+set ASM_VIS_WinGDDriver_VER=dummy
+set ASM_VIS_LC_DRV=c:\wineagle
+c:\
+cd \wineagle
+start solarhost

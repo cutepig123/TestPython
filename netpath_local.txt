@@ -1,0 +1,17 @@
+D: C:\Drive_D
+G: C:\latest
+I: D:\aaa_vis
+k: \\aaants230\proj\vision\WinEagle\WinXP\autotest\LATEST
+M: D:\aaa_vis\vision\prlib\eagle\alg_sys\atseagle\VER_U
+N: D:\aaa_vis\vision\prlib
+O: D:\aaa_vis\vision\prlib\winEagle\winXP\CSysLib\latest
+P: D:\aaa_vis\vision\prlib\MATROX\Mil8_0
+S: D:\aaa_vis\vision\prlib\pcimglib\VER_U
+U: D:\aaa_vis\vision\prlib\wineagle\winxp\alg_sys\VER_O_MIL80
+V: D:\aaa_vis\vision\prlib\eagle\alg_sys\aaaeagle\VER_U
+W: D:\AppPublic
+X: D:\aaa_vis
+y: \\aaaex\aaaproj\Vision\App\User\aeejshe
+
+J: \\aaaex\aaaproj\vision
+Z: \\aaaex\aaaproj\visionTesting

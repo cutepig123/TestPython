@@ -1,0 +1,23 @@
+import os,sys
+fp=open(sys.argv[1],'r')
+max_thick_range=0
+case = ""
+for line in fp.readlines():
+	if line.find('<td>Thickness</td>')>=0:
+		#print line
+		p1 = line.find('open_Max_win(this)')
+		assert(p1>0)
+		p2= line.find('<td>',p1)
+		assert(p2>0)
+		p3= line.find('</td>',p2)
+		assert(p3>0)
+		value = line[p2+len('<td>'):p3]
+		
+		print value
+		value = float(value)
+		
+		if value>max_thick_range:
+			max_thick_range = value
+			case = line
+		
+print "max_thick_range:", max_thick_range,	case	

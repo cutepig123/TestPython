@@ -1,0 +1,13 @@
+Error Status (0x4803) occurs at line 145 in "G:\ITF\SOURCE\read2dc.c" file.
+cannot get firmware version in one invalid channel! This channel doesn't connect camera error!
+NEW_R	NIL	Max Error Allowed is reset to 1000
+set wafer id time fail!m_ulSetDevIDTime
+NIL	FILE_ImageSize error!
+NIL	Check NPtTTV Offset x Fail, Current
+NIL	Check NPtTTV Offset y Fail, Current
+Fail in DOS_CopyFile return from boost is boost::filesystem::copy_file: The system cannot find the file specified: "record\light_0.inf",
+Error Status (0x3705) occurs at line 64 in "G:\Itf\Source\2Dcode\2DCODE_LEARN.C" file.
+Error Status (0x3705) occurs at line 249 in "G:\Itf\Source\SMT\Learn.c" file.
+ignore error HRM_ERR_NOT_INITIALIZED
+This channel doesn't connect camera error
+ror(0x4803) occurs at line 145 in "G:\ITF\SOURCE\read2dc

@@ -1,0 +1,1 @@
+path A:\JSHe\tools\Python25_2;%path%
