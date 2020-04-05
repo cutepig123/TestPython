@@ -4,10 +4,21 @@ import subprocess
 #from urllib2 import urlopen
 import requests
 import wget
+import filecache
 
+	
+@filecache.filecache	
+def requests_get(link):
+	return requests.get(link)
+
+@filecache.filecache	
+def requests_post(link,data):
+	return requests.post(link, data)
+	
 def my_system(cmd):
 	print(cmd)
 	os.system(cmd)
+	
 	
 def download(url, file):
 	cmd = 'python -m wget %s -o "%s"'%(url, file)
@@ -19,6 +30,7 @@ def download(url, file):
 		raise  'error, %s return %d'%(cmd, ret)
 	#wget.download(url, file)
 	
+@filecache.filecache	
 def download_chapter(click_url, file):
 	download('http://www.hzcourse.com/resource/readBook?path=%s'%click_url, file)
 	
@@ -50,39 +62,69 @@ def get_value_token(cont):
 	print('ebookId, token %s %s'%(ebookId, token))
 	return [ebookId, token]
 	
-def download_book(main_link):
+def get_bookid_raw(main_link):
 	main_file = 'main.html'
 	my_system('del %s'%main_file)
-	try:
-		download(main_link, main_file)
-	except:
-		print("Unexpected error:", sys.exc_info()[0])
-		return
+	download(main_link, main_file)
 	main_cont = open(main_file, 'r', encoding='utf-8').read()
 	[ebookId, token] = get_value_token(main_cont)
 	bookname = get_bookname(main_cont)
 	print(bookname)
+	return [ebookId, token, bookname]
+	
+@filecache.filecache	
+def get_bookid_cached(main_link):
+	return get_bookid_raw(main_link)
+	
+g_token = ''	
 
-	dest_folder = bookname
+def clear_token():
+	global g_token
+	g_token = ''	
 	
-	my_system('md "%s"'%dest_folder)
-	my_system('copy /y "%s" "%s"'%(main_file, dest_folder))
-	finish_file = '%s\\%s'%(dest_folder, 'finish.txt')
-	if os.path.isfile(finish_file): return
+def get_bookid(main_link):
+	global g_token
+	if len(g_token)==0:
+		[ebookId, token, bookname] = get_bookid_raw(main_link)
+		g_token = token
+	else:
+		[ebookId, token, bookname] = get_bookid_cached(main_link)
+	return [ebookId, g_token, bookname]
 	
-	#response = requests.post('http://www.hzcourse.com/web/refbook/queryAllChapterList', data={'ebookId':15917,'token':"aec187ed5b3a41728b0fb8bd82c3be22"})
-	try:
-		response = requests.post('http://www.hzcourse.com/web/refbook/queryAllChapterList', data={'ebookId':ebookId,'token':token})
-		resp_json = response.json()
-	except:
-		print("Unexpected error:", sys.exc_info()[0])
-		return
-	#print(resp_json)
+def correct_file_path(s):
+	return s.replace(':','').replace('/','').replace('\\','').replace('&','')
+	
+def download_book(main_link):
+	resp_json=''
+	while True:
+		try:
+			print('>>>>step a get book id', main_link)
+			[ebookId, token, bookname] = get_bookid(main_link)
+			bookname = correct_file_path(bookname)
+			print('>>>>result', [ebookId, token, bookname])
+			
+			dest_folder = bookname
+			
+			my_system('md "%s"'%dest_folder)
+			finish_file = '%s\\%s'%(dest_folder, 'finish.txt')
+			if os.path.isfile(finish_file): return
+			
+			print('>>>>get chapter list')
+			response = requests_post('http://www.hzcourse.com/web/refbook/queryAllChapterList', data={'ebookId':ebookId,'token':token})
+			resp_json = response.json()
+			#print('>>>>result', resp_json)
+		
+			temp = resp_json['data']['data']
+			break
+		except:
+			print("Unexpected error:", sys.exc_info()[0])
+			clear_token()
+			
 	nExcept = 0
 	for i in resp_json['data']['data']:
 		ref_link = i['ref']
 		file = ref_link[ref_link.rfind('/')+1:]
-		print(ref_link, file)
+		print('>>>>get chapter', [ref_link, file])
 		dest_file = '%s\\%s'%(dest_folder, file)
 		if os.path.isfile(dest_file): continue
 		
@@ -92,41 +134,9 @@ def download_book(main_link):
 			nExcept = nExcept+1
 			print("Unexpected error:", sys.exc_info()[0])
 			if nExcept>4: return
-	
+	print('>>>>write done')
 	open(finish_file,'w').write('done')
 	
-files = [	
-'http://www.hzcourse.com/web/refbook/probationAll/6736/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6736/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6856/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/7899/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/7249/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/7165/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/7186/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/7523/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6965/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6826/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6166/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6188/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6853/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/4599/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6759/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6772/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6754/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6755/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6856/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6965/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/7027/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6736/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6821/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6622/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6606/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6751/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6652/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6050/aec187ed5b3a41728b0fb8bd82c3be22',
-'http://www.hzcourse.com/web/refbook/probationAll/6965/aec187ed5b3a41728b0fb8bd82c3be22',
-]
-
 def unique(list1): 
 	# insert the list to the set 
 	list_set = set(list1) 
@@ -134,13 +144,6 @@ def unique(list1):
 	unique_list = list(list_set)
 	return unique_list
 
-def main():	
-	files2= unique(files)
-
-	for file in files2:
-		download_book(file)
-		
-#main()
 def getStrIn(cont, a, b):
 	p1 = cont.find(a)
 	p1 = p1 + len(a)
@@ -148,16 +151,17 @@ def getStrIn(cont, a, b):
 	p2 = cont.find(b, p1)
 	name=cont[p1:p2]
 	return name
-	
+
 def main2():
-	for line in open(r'G:\_codes\pydownloadurls.txt','r').readlines():
+	for line in open(os.path.dirname(os.path.realpath(__file__)) + r'\pydownloadurls.txt','r').readlines():
 		line = line.strip()
 		p1 = line.find('/detail?id')
 		if p1>=0:
 			link = 'http://ebooks.cmanuf.com/%s'%line[p1:]
-			print(link)
+			print('-----------')
+			print('>>step1 get',link)
 			try:
-				resp = requests.get(link)
+				resp = requests_get(link)
 			except:
 				print("Unexpected error:", sys.exc_info()[0])
 				continue
@@ -165,14 +169,15 @@ def main2():
 			#print(resp.text)
 			s = getStrIn(resp.text, '<div class="read readactive" >', '</div>')
 			s = getStrIn(s, '<a href="', '" target="')
-			print(s)
+			print('>>result', s)
 			link2 = 'http://ebooks.cmanuf.com/%s'%s
 			try:
-				resp2 = requests.get(link2)
+				resp2 = requests_get(link2)
 			except:
 				print("Unexpected error:", sys.exc_info()[0])
 				continue
 			#print(resp2.text)
+			print('>>step2 download book',link2)
 			download_book(link2)
 			
-main()
+main2()

@@ -1,0 +1,3 @@
+import numpy
+a=numpy.matrix('1,2;3,4')
+print a
